@@ -20,16 +20,19 @@ public class User {
 
     private String surname;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+    private String email;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Event> events;
 
     public User() {
     }
 
-    public User(String username, String name, String surname, List<Event> events) {
+    public User(String username, String name, String surname, String email, List<Event> events) {
         this.username = username;
         this.name = name;
         this.surname = surname;
+        this.email = email;
         this.events = events;
     }
 }
