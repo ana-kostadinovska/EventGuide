@@ -8,6 +8,7 @@ import java.time.LocalTime;
 
 @Data
 @Entity
+@Table(name = "events")
 public class Event {
 
     @Id
@@ -25,9 +26,11 @@ public class Event {
     private LocalTime time;
 
     @ManyToOne
+    @JoinColumn(name = "local_id", nullable = false)
     private Local local;
 
     @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
     public Event() {
