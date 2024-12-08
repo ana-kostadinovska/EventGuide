@@ -27,6 +27,9 @@ public class Event {
     @ManyToOne
     private Local local;
 
+    @ManyToOne
+    private User user;
+
     public Event() {
     }
 
