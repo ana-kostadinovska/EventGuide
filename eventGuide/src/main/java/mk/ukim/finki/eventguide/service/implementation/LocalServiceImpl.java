@@ -1,8 +1,6 @@
 package mk.ukim.finki.eventguide.service.implementation;
 
 import mk.ukim.finki.eventguide.model.Local;
-import mk.ukim.finki.eventguide.model.exceptions.EventNotFoundException;
-import mk.ukim.finki.eventguide.model.exceptions.LocalNotFoundException;
 import mk.ukim.finki.eventguide.repository.LocalRepository;
 import mk.ukim.finki.eventguide.service.LocalService;
 import org.springframework.stereotype.Service;
