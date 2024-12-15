@@ -4,6 +4,33 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Frontend app</title>
+  <script>
+
+    function pingResourceServer() {
+      // Get the access token from localStorage
+      var token = document.getElementById('accessToken').textContent
+
+
+      fetch('http://localhost:9090/api/events', {
+        method: 'GET',
+        headers: {
+          'Authorization': 'Bearer ' + token // Use the token from localStorage
+        }
+      })
+              .then(response => {
+                if (response.ok) {
+                  document.getElementById('ping-result').textContent = '200 OK';
+                } else if (response.status === 401) {
+                  document.getElementById('ping-result').textContent = '401 Unauthorized';
+                } else {
+                  document.getElementById('ping-result').textContent = 'Error: ' + response.status;
+                }
+              })
+              .catch(error => {
+                document.getElementById('ping-result').textContent = 'Error: ' + error;
+              });
+    }
+  </script>
 </head>
 <body>
 <div>
@@ -13,17 +40,23 @@
     <div sec:authorize="isAuthenticated()">
       <div>
         Hello, <strong th:text="${#authentication.name}"></strong>!
-        <br>
-        <br>
+        <br><br>
       </div>
       <div>
         Here are all the OIDC properties you can use: <div th:text="${#authentication.getPrincipal()}"/>
-        <br>
-        <br>
+        <br><br>
       </div>
+
       <div>
         <a th:href="@{/logout}"><button>Log out</button></a>
       </div>
+      <!-- Ping Button -->
+    </div>
+
+    <div>
+      <button onclick="pingResourceServer()">Ping Resource Server</button>
+      <p id="ping-result"></p> <!-- Display the result of the ping -->
+      <p id="accessToken" th:text="${accessToken}"></p> <!-- Display the access token -->
     </div>
 
     <div sec:authorize="isAnonymous()">
