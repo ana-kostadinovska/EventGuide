@@ -1,5 +1,6 @@
 package mk.ukim.finki.eventguide.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 import java.util.List;
@@ -25,6 +26,7 @@ public class Local {
     private LocalType type;
 
     @OneToMany(mappedBy = "local", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private List<Event> events;
 
     public Local() {

@@ -1,5 +1,6 @@
 package mk.ukim.finki.eventguide.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -26,10 +27,12 @@ public class Event {
     private LocalTime time;
 
     @ManyToOne
+    @JsonBackReference
     @JoinColumn(name = "local_id", nullable = false)
     private Local local;
 
     @ManyToOne
+    @JsonBackReference
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
