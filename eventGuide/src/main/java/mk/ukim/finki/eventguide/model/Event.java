@@ -26,11 +26,9 @@ public class Event {
     private LocalTime time;
 
     @ManyToOne
-    @JoinColumn(name = "local_id", nullable = false)
     private Local local;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
     public Event() {
@@ -44,4 +42,5 @@ public class Event {
         this.time = time;
         this.local = local;
     }
+
 }

@@ -3,8 +3,6 @@ package mk.ukim.finki.eventguide.model;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.util.List;
-
 @Data
 @Entity
 @Table(name = "app_users")
@@ -22,17 +20,13 @@ public class User {
 
     private String email;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Event> events;
-
     public User() {
     }
 
-    public User(String username, String name, String surname, String email, List<Event> events) {
+    public User(String username, String name, String surname, String email) {
         this.username = username;
         this.name = name;
         this.surname = surname;
         this.email = email;
-        this.events = events;
     }
 }

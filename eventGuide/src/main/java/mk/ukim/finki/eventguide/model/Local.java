@@ -24,18 +24,14 @@ public class Local {
     @Enumerated(EnumType.STRING)
     private LocalType type;
 
-    @OneToMany(mappedBy = "local", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Event> events;
-
     public Local() {
     }
 
-    public Local(String name, String location, String workingHours, int contact_number, LocalType type, List<Event> events) {
+    public Local(String name, String location, String workingHours, int contact_number, LocalType type) {
         this.name = name;
         this.location = location;
         this.workingHours = workingHours;
         this.contact_number = contact_number;
         this.type = type;
-        this.events = events;
     }
 }
