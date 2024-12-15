@@ -2,8 +2,6 @@ package mk.ukim.finki.eventguide.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
-
-import java.time.LocalTime;
 import java.util.List;
 
 @Data
@@ -19,9 +17,7 @@ public class Local {
 
     private String location;
 
-    private LocalTime work_from;
-
-    private LocalTime work_to;
+    private String workingHours;
 
     private int contact_number;
 
@@ -34,11 +30,10 @@ public class Local {
     public Local() {
     }
 
-    public Local(String name, String location, LocalTime work_from, LocalTime work_to, int contact_number, LocalType type, List<Event> events) {
+    public Local(String name, String location, String workingHours, int contact_number, LocalType type, List<Event> events) {
         this.name = name;
         this.location = location;
-        this.work_from = work_from;
-        this.work_to = work_to;
+        this.workingHours = workingHours;
         this.contact_number = contact_number;
         this.type = type;
         this.events = events;
