@@ -35,12 +35,12 @@ public class LocalRestController {
     public ResponseEntity<Local> save(
             @RequestParam String name,
             @RequestParam String location,
-            @RequestParam List<WorkTime> workTimes,
+            @RequestParam String workingHours,
             @RequestParam int contact_number,
             @RequestParam LocalType type,
             @RequestParam List<Event> events
     ) {
-        return this.localService.save(name, location, workTimes, contact_number, type, events)
+        return this.localService.save(name, location, workingHours, contact_number, type, events)
                 .map(local -> ResponseEntity.ok().body(local))
                 .orElseGet(() -> ResponseEntity.badRequest().build());
     }
@@ -50,12 +50,12 @@ public class LocalRestController {
             @PathVariable Long id,
             @RequestParam String name,
             @RequestParam String location,
-            @RequestParam List<WorkTime> workTimes,
+            @RequestParam String workingHours,
             @RequestParam int contact_number,
             @RequestParam LocalType type,
             @RequestParam List<Event> events
     ) {
-        return this.localService.edit(id,name, location, workTimes, contact_number, type, events)
+        return this.localService.edit(id,name, location, workingHours, contact_number, type, events)
                 .map(local -> ResponseEntity.ok().body(local))
                 .orElseGet(() -> ResponseEntity.badRequest().build());
     }

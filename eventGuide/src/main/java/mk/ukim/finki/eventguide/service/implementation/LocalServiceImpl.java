@@ -29,17 +29,17 @@ public class LocalServiceImpl implements LocalService {
     }
 
     @Override
-    public Optional<Local> save(String name, String location, List<WorkTime> workTimes, int contact_number, LocalType type, List<Event> events) {
-        Local local=new Local(name,location,workTimes,contact_number,type,events);
+    public Optional<Local> save(String name, String location, String workingHours, int contact_number, LocalType type, List<Event> events) {
+        Local local=new Local(name,location,workingHours,contact_number,type,events);
         return Optional.of(this.localRepository.save(local));
     }
 
     @Override
-    public Optional<Local> edit(Long id, String name, String location, List<WorkTime> workTimes, int contact_number, LocalType type, List<Event> events) {
+    public Optional<Local> edit(Long id, String name, String location, String workingHours, int contact_number, LocalType type, List<Event> events) {
         Local local=localRepository.findById(id).get();
         local.setName(name);
         local.setLocation(location);
-        local.setWorkTimes(workTimes);
+        local.setWorkingHours(workingHours);
         local.setContact_number(contact_number);
         local.setType(type);
         local.setEvents(events);
