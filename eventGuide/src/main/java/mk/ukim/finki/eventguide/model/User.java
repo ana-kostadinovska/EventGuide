@@ -1,7 +1,10 @@
 package mk.ukim.finki.eventguide.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Data;
+
+import java.util.List;
 
 @Data
 @Entity
@@ -20,13 +23,18 @@ public class User {
 
     private String email;
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonBackReference
+    private List<Event> events;
+
     public User() {
     }
 
-    public User(String username, String name, String surname, String email) {
+    public User(String username, String name, String surname, String email, List<Event> events) {
         this.username = username;
         this.name = name;
         this.surname = surname;
         this.email = email;
+        this.events = events;
     }
 }

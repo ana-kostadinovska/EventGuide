@@ -1,5 +1,6 @@
 package mk.ukim.finki.eventguide.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 import java.util.List;
@@ -24,14 +25,19 @@ public class Local {
     @Enumerated(EnumType.STRING)
     private LocalType type;
 
+    @OneToMany(mappedBy = "local", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    private List<Event> events;
+
     public Local() {
     }
 
-    public Local(String name, String location, String workingHours, int contact_number, LocalType type) {
+    public Local(String name, String location, String workingHours, int contact_number, LocalType type, List<Event> events) {
         this.name = name;
         this.location = location;
         this.workingHours = workingHours;
         this.contact_number = contact_number;
         this.type = type;
+        this.events = events;
     }
 }
