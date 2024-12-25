@@ -75,7 +75,7 @@ public class PlacesAPIRequest {
 
             try (FileWriter writer = new FileWriter(csvFile)) {
 
-                writer.append("Name, Address,Primary Type, Types, PhoneNumber, OpeningHours, Maps link, Local website\n");
+                writer.append("Name; Address; Primary Type; Types; PhoneNumber; OpeningHours; Maps link; Local website\n");
 
                 JsonNode places = rootNode.get("places");
                 for (JsonNode place : places) {
@@ -92,13 +92,13 @@ public class PlacesAPIRequest {
                             ? place.get("websiteUri").asText()
                             : "N/A";
 
-                    writer.append(name).append(", ").append(address).append(", ").append(primaryType).append(", ")
-                            .append(types.toString()).append(", ").append(phoneNumber).append(", ")
-                            .append(workingHours.toString()).append(", ").append(mapsUri).append(", ")
+                    writer.append(name).append("; ").append(address).append("; ").append(primaryType).append("; ")
+                            .append(types.toString()).append("; ").append(phoneNumber).append("; ")
+                            .append(workingHours.toString()).append("; ").append(mapsUri).append("; ")
                             .append(websiteUri).append("\n");
-                    sb.append(name).append(", ").append(address).append(", ").append(primaryType).append(", ")
-                            .append(types.toString()).append(", ").append(phoneNumber).append(", ")
-                            .append(workingHours.toString()).append(", ").append(mapsUri).append(", ")
+                    sb.append(name).append("; ").append(address).append("; ").append(primaryType).append("; ")
+                            .append(types.toString()).append("; ").append(phoneNumber).append("; ")
+                            .append(workingHours.toString()).append("; ").append(mapsUri).append("; ")
                             .append(websiteUri).append("\n");
 
                     writer.flush();
