@@ -2,14 +2,17 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Local Details</title>
+    <title th:text="${local.name}">Local Details</title>
 </head>
 <body>
-<h1>Local Details</h1>
-<p><strong>Name:</strong> <span th:text="${local.name}"></span></p>
+<h1 th:text="${local.name}"></h1>
+
+<p><strong>Type:</strong> <span th:text="${local.type}"></span></p>
 <p><strong>Location:</strong> <span th:text="${local.location}"></span></p>
+<p><strong>Working Hours:</strong> <span th:text="${local.workingHours}"></span></p>
 <p><strong>Contact Number:</strong> <span th:text="${local.contact_number}"></span></p>
 
 <a href="/locals">Back to List</a>
+
 </body>
 </html>

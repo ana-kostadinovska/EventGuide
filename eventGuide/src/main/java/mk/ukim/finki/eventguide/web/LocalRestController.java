@@ -68,4 +68,10 @@ public class LocalRestController {
         return ResponseEntity.badRequest().build();
     }
 
+    @GetMapping("/{id}/events")
+    public ResponseEntity<List<Event>> getEventsByLocalId(@PathVariable Long id) {
+        return this.localService.findById(id)
+                .map(local -> ResponseEntity.ok().body(local.getEvents()))
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
 }
