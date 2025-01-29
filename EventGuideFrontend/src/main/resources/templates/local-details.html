@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Local Details</title>
+</head>
+<body>
+<h1>Local Details</h1>
+<p><strong>Name:</strong> <span th:text="${local.name}"></span></p>
+<p><strong>Location:</strong> <span th:text="${local.location}"></span></p>
+<p><strong>Contact Number:</strong> <span th:text="${local.contact_number}"></span></p>
+
+<a href="/locals">Back to List</a>
+</body>
+</html>

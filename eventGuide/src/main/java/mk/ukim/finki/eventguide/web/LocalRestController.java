@@ -11,6 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/locals")
+@CrossOrigin(origins = "http://localhost:8080")
 public class LocalRestController {
 
     private final LocalService localService;
