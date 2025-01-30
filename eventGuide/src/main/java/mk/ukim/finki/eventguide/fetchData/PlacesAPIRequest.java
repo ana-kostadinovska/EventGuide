@@ -70,7 +70,7 @@ public class PlacesAPIRequest {
         String csvFile = "places.csv";
         try (FileWriter writer = new FileWriter(csvFile)) {
 
-            writer.append("Name; Address; Type; PhoneNumber; OpeningHours\n");
+            writer.append("Name;Address;Primary Type;Types;PhoneNumber;OpeningHours;Maps link;Local website\n");
 
             for (String request : requests) {
                 try {
@@ -79,7 +79,7 @@ public class PlacesAPIRequest {
                     connection.setRequestMethod("POST");
                     connection.setRequestProperty("Content-Type", "application/json");
                     connection.setRequestProperty("X-Goog-Api-Key", apiKey);
-                    connection.setRequestProperty("X-Goog-FieldMask", "places.displayName,places.formattedAddress,places.primaryType,places.nationalPhoneNumber,places.regularOpeningHours");
+                    connection.setRequestProperty("X-Goog-FieldMask", "places.displayName,places.shortFormattedAddress,places.primaryType,places.types,places.nationalPhoneNumber,places.regularOpeningHours,places.googleMapsUri,places.websiteUri");
                     connection.setDoOutput(true);
 
                     try (OutputStream os = connection.getOutputStream()) {
@@ -111,15 +111,22 @@ public class PlacesAPIRequest {
                     JsonNode places = rootNode.get("places");
                     for (JsonNode place : places) {
                         String name = place.get("displayName").get("text").asText();
-                        String address = place.get("formattedAddress").asText();
+                        String address = place.get("shortFormattedAddress").asText();
+                        JsonNode types = place.get("types");
                         String phoneNumber = place.has("nationalPhoneNumber") && !place.get("nationalPhoneNumber").isNull()
                                 ? place.get("nationalPhoneNumber").asText()
                                 : "N/A";
-                        String type = place.get("primaryType").asText();
+                        String primaryType = place.get("primaryType").asText();
                         JsonNode workingHours = place.get("regularOpeningHours").withArray("weekdayDescriptions");
+                        String mapsUri = place.get("googleMapsUri").asText();
+                        String websiteUri = place.has("websiteUri") && !place.get("websiteUri").isNull()
+                                ? place.get("websiteUri").asText()
+                                : "N/A";
 
-                        writer.append(name).append("; ").append(address).append("; ").append(type).append("; ")
-                                .append(phoneNumber).append("; ").append(workingHours.toString()).append("\n");
+                        writer.append(name).append("; ").append(address).append("; ").append(primaryType).append("; ")
+                                .append(types.toString()).append("; ").append(phoneNumber).append("; ")
+                                .append(workingHours.toString()).append("; ").append(mapsUri).append("; ")
+                                .append(websiteUri).append("\n");
 
                         writer.flush();
                     }
