@@ -4,5 +4,6 @@ public enum LocalType {
     BAR,
     CAFE,
     RESTAURANT,
-    NIGHT_CLUB
+    NIGHT_CLUB,
+    PUB
 }

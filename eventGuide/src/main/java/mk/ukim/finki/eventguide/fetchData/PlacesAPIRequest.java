@@ -14,7 +14,7 @@ import java.util.List;
 public class PlacesAPIRequest {
     public static void main(String[] args) {
         String apiUrl = "https://places.googleapis.com/v1/places:searchNearby";
-        String apiKey = ""; //todo
+        String apiKey = "";
         StringBuilder response = new StringBuilder();
         List<String> requests = new ArrayList<>();
         String requestBody1 = """
@@ -59,7 +59,8 @@ public class PlacesAPIRequest {
                           },
                           "radius": 5000.0
                         }
-                      }
+                      },
+                      "languageCode": "mk"
                     }
                 """;
 
@@ -107,7 +108,7 @@ public class PlacesAPIRequest {
                 try {
                     ObjectMapper objectMapper = new ObjectMapper();
                     JsonNode rootNode = objectMapper.readTree(response.toString());
-
+                  
                     JsonNode places = rootNode.get("places");
                     for (JsonNode place : places) {
                         String name = place.get("displayName").get("text").asText();
@@ -130,7 +131,6 @@ public class PlacesAPIRequest {
 
                         writer.flush();
                     }
-
                     System.out.println("CSV file saved: " + csvFile);
                 } catch (JsonProcessingException e) {
                     throw new RuntimeException(e);
