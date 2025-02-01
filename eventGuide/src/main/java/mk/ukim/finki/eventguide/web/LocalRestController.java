@@ -37,7 +37,7 @@ public class LocalRestController {
             @RequestParam String name,
             @RequestParam String location,
             @RequestParam String workingHours,
-            @RequestParam int contact_number,
+            @RequestParam String contact_number,
             @RequestParam LocalType type,
             @RequestParam List<Event> events
     ) {
@@ -52,7 +52,7 @@ public class LocalRestController {
             @RequestParam String name,
             @RequestParam String location,
             @RequestParam String workingHours,
-            @RequestParam int contact_number,
+            @RequestParam String contact_number,
             @RequestParam LocalType type,
             @RequestParam List<Event> events
     ) {
@@ -73,5 +73,10 @@ public class LocalRestController {
         return this.localService.findById(id)
                 .map(local -> ResponseEntity.ok().body(local.getEvents()))
                 .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @GetMapping("/filter")
+    public List<Local> getLocalsByType(@RequestParam LocalType type) {
+        return localService.findByType(type);
     }
 }

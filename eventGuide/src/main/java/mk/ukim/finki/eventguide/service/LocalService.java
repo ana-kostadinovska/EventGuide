@@ -12,7 +12,8 @@ import java.util.Optional;
 public interface LocalService {
     List<Local> findAll();
     Optional<Local> findById(Long id);
-    Optional<Local> save(String name, String location, String workingHours, int contact_number, LocalType type, List<Event>events);
-    Optional<Local> edit(Long id,String name, String location, String workingHours, int contact_number, LocalType type, List<Event>events);
+    Optional<Local> save(String name, String location, String workingHours, String contact_number, LocalType type, List<Event>events);
+    Optional<Local> edit(Long id,String name, String location, String workingHours, String contact_number, LocalType type, List<Event>events);
     void deleteById(Long id);
+    List<Local> findByType(LocalType type);
 }

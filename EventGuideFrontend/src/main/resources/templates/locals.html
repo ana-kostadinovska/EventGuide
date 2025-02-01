@@ -7,12 +7,27 @@
 <body>
 
 <h1>Locals</h1>
+
+<form action="/locals" method="get">
+    <label for="type">Filter by type:</label>
+    <select id="type" name="type">
+        <option value="">All</option>
+        <option value="RESTAURANT" th:selected="${param.type == 'RESTAURANT'}">Restaurant</option>
+        <option value="CAFE" th:selected="${param.type == 'CAFE'}">Café</option>
+        <option value="BAR" th:selected="${param.type == 'BAR'}">Bar</option>
+        <option value="NIGHT_CLUB" th:selected="${param.type == 'NIGHT_CLUB'}">Night club</option>
+        <option value="PUB" th:selected="${param.type == 'PUB'}">Pub</option>
+    </select>
+    <button type="submit">Apply Filter</button>
+</form>
+
 <div th:each="local : ${locals}">
     <p th:text="${local.name}" style="font-weight: bold"></p>
     <p th:text="${local.type}"></p>
 
     <a th:href="@{/locals/{id}(id=${local.id})}">Details</a>
-
 </div>
+
 </body>
 </html>
+

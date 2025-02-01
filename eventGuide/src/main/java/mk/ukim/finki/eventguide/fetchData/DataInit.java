@@ -22,7 +22,7 @@ public class DataInit {
     public void init() {
         List<CreateLocalDto> localDtos = LoadDataFromCsv.loadObjectList(CreateLocalDto.class, "places.csv");
         for (CreateLocalDto dto : localDtos) {
-            localRepository.save(new Local(dto.Name, dto.Address, dto.OpeningHours.get(0), 0, LocalType.BAR, null));
+            localRepository.save(new Local(dto.Name, dto.Address, dto.OpeningHours.get(0), dto.PhoneNumber, LocalType.BAR, null));
         }
     }
 }
