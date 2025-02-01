@@ -54,7 +54,13 @@ public class LocalController {
                 backendUrl + "/" + id, HttpMethod.GET, entity, Map.class
         );
 
-        model.addAttribute("local", response.getBody());
+        Map local = response.getBody();
+        if (local != null) {
+            List<Map> events = (List<Map>) local.get("events");
+            local.put("events", events);
+        }
+
+        model.addAttribute("local", local);
         return "local-details";
     }
 }
