@@ -12,8 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class EventServiceImpl implements EventService {
@@ -62,6 +61,29 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
+    public List<Event> searchEvents(String name, String location) {
+        Set<Event> result = new HashSet<>();
+
+        if (name != null && !name.isEmpty()) {
+            result.addAll(this.eventRepository.findByNameContainingIgnoreCase(name));
+        }
+
+        if (location != null && !location.isEmpty()) {
+            result.addAll(this.eventRepository.findByLocalLocationContainingIgnoreCase(location));
+        }
+
+        if (name == null && location == null) {
+            return this.eventRepository.findAll();
+        }
+
+        return new ArrayList<>(result);
+    }
+
+    @Override
+    public List<Event> filterEventsByDate(LocalDate date) {
+        return this.eventRepository.findByDate(date);
+    
+    @Override   
     public Event interested(Long id) {
         Event event=findById(id).get();
         event.setInterested(event.getInterested()+1);
