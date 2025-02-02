@@ -2,6 +2,7 @@ package mk.ukim.finki.eventguide.service.implementation;
 
 import mk.ukim.finki.eventguide.model.Event;
 import mk.ukim.finki.eventguide.model.Local;
+import mk.ukim.finki.eventguide.model.LocalType;
 import mk.ukim.finki.eventguide.model.User;
 import mk.ukim.finki.eventguide.repository.EventRepository;
 import mk.ukim.finki.eventguide.repository.LocalRepository;
@@ -58,6 +59,17 @@ public class EventServiceImpl implements EventService {
     @Override
     public void deleteById(Long id) {
         this.eventRepository.deleteById(id);
+    }
+
+    @Override
+    public Event interested(Long id) {
+        Event event=findById(id).get();
+        event.setInterested(event.getInterested()+1);
+        return eventRepository.save(event);
+    }
+    @Override
+    public List<Event> getInterestedEvents(Long userId) {
+        return eventRepository.findByInterestedUsers_Id(userId);
     }
 
 }

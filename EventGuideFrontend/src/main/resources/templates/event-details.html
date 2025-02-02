@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Event Details</title>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const interestedBtn = document.getElementById("interested-btn");
+            const interestedCountSpan = document.getElementById("interested-count");
+
+            let isInterested = false;
+
+            if (interestedBtn) {
+                interestedBtn.addEventListener("click", function() {
+                    const eventId = this.getAttribute("data-id");
+
+                    fetch(`/events/interested/${eventId}`, { method: 'POST' })
+                        .then(response => response.json())
+                        .then(data => {
+                            // Toggle between full and empty star
+                            isInterested = !isInterested;
+
+                            if (isInterested) {
+                                interestedBtn.innerHTML = '★';
+                            } else {
+                                interestedBtn.innerHTML = '☆';
+                            }
+                            interestedCountSpan.innerText = data.interestedCount;
+                        })
+                        .catch(error => console.error("Error updating interest count:", error));
+                });
+            }
+        });
+    </script>
+</head>
+<body>
+
+<h1 th:text="${event.name}">Event Title</h1>
+<p th:text="${event.description}">Event Description</p>
+<p><strong>Date:</strong> <span th:text="${event.date}"></span></p>
+<p><strong>Local:</strong>
+<p><strong>Location:</strong>
+<p><strong>Interested Users:</strong> <span id="interested-count" th:text="${event.interested}"></span></p>
+
+<button id="interested-btn" th:data-id="${event.id}">
+    ☆ Interested
+</button>
+
+</body>
+</html>

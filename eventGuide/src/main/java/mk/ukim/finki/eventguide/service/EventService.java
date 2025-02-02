@@ -10,9 +10,13 @@ import java.util.List;
 import java.util.Optional;
 
 public interface EventService {
+
     List<Event> findAll();
     Optional<Event> findById(Long id);
     Optional<Event> save(String name, String artist, String description, LocalDate date, LocalTime time, Long local_id);
     Optional<Event> edit(Long id,String name, String artist, String description, LocalDate date, LocalTime time, Long local_id);
     void deleteById(Long id);
+    Event interested(Long id);
+    List<Event> getInterestedEvents(Long userId);
+
 }

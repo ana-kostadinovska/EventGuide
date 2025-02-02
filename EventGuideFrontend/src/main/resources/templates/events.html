@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Events</title>
+</head>
+<body>
+<h1>All Events</h1>
+
+<div>
+    <h3>List of Events</h3>
+    <ul>
+        <th:block th:each="event : ${events}">
+            <li>
+                <a th:href="@{/events/{id}(id=${event.id})}" th:text="${event.name}"></a>
+                <p th:text="${event.artist}"></p>
+                <p th:text="${event.date}">Date: </p>
+                <p th:text="${event.time}">Time: </p>
+            </li>
+        </th:block>
+    </ul>
+</div>
+
+</body>
+</html>

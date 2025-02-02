@@ -1,10 +1,13 @@
 package mk.ukim.finki.eventguide.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Data
 @Entity
@@ -22,6 +25,15 @@ public class User {
     private String surname;
 
     private String email;
+
+    @ManyToMany
+    @JoinTable(
+            name = "user_event_interest",  // Join table name
+            joinColumns = @JoinColumn(name = "user_id"),  // FK for User
+            inverseJoinColumns = @JoinColumn(name = "event_id")  // FK for Event
+    )
+    @JsonManagedReference
+    private Set<Event> interest = new HashSet<>();
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonBackReference
