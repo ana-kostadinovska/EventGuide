@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface EventService {
+
     List<Event> findAll();
     Optional<Event> findById(Long id);
     Optional<Event> save(String name, String artist, String description, LocalDate date, LocalTime time, Long local_id);
@@ -17,4 +18,7 @@ public interface EventService {
     void deleteById(Long id);
     List<Event> searchEvents(String name, String location);
     List<Event> filterEventsByDate(LocalDate date);
+    Event interested(Long id);
+    List<Event> getInterestedEvents(Long userId);
+  
 }

@@ -6,6 +6,8 @@ import lombok.Data;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @Entity
@@ -25,13 +27,18 @@ public class Event {
     private LocalDate date;
 
     private LocalTime time;
+    private Integer interested;
 
     @ManyToOne
     @JsonBackReference
     @JoinColumn(name = "local_id", nullable = false)
     private Local local;
 
-    @ManyToOne
+    @ManyToMany(mappedBy = "interest")  // Reference to User's interest field
+    @JsonBackReference
+    private Set<User> interestedUsers = new HashSet<>();
+
+    @ManyToOne(fetch = FetchType.EAGER)
     @JsonBackReference
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
@@ -46,5 +53,6 @@ public class Event {
         this.date = date;
         this.time = time;
         this.local = local;
+        interested=0;
     }
 }

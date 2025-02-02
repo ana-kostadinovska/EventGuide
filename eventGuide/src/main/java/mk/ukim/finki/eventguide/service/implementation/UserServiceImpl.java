@@ -1,5 +1,6 @@
 package mk.ukim.finki.eventguide.service.implementation;
 
+import jakarta.transaction.Transactional;
 import mk.ukim.finki.eventguide.model.Event;
 import mk.ukim.finki.eventguide.model.User;
 import mk.ukim.finki.eventguide.repository.EventRepository;
@@ -50,5 +51,44 @@ public class UserServiceImpl implements UserService {
     @Override
     public void deleteById(Long id) {
         this.userRepository.deleteById(id);
+    }
+    @Override
+    @Transactional
+    public Optional<User> addInterest(Long userId, Long eventId) {
+        Optional<User> userOptional = userRepository.findById(userId);
+        Optional<Event> eventOptional = eventRepository.findById(eventId);
+
+        if (userOptional.isPresent() && eventOptional.isPresent()) {
+            User user = userOptional.get();
+            Event event = eventOptional.get();
+
+            user.getInterest().add(event);
+            event.getInterestedUsers().add(user);
+
+            event.setInterested(event.getInterestedUsers().size()); // Update interest count
+
+            return Optional.of(userRepository.save(user));
+        }
+        return Optional.empty();
+    }
+
+    @Override
+    @Transactional
+    public Optional<User> removeInterest(Long userId, Long eventId) {
+        Optional<User> userOptional = userRepository.findById(userId);
+        Optional<Event> eventOptional = eventRepository.findById(eventId);
+
+        if (userOptional.isPresent() && eventOptional.isPresent()) {
+            User user = userOptional.get();
+            Event event = eventOptional.get();
+
+            user.getInterest().remove(event);
+            event.getInterestedUsers().remove(user);
+
+            event.setInterested(event.getInterestedUsers().size()); // Update interest count
+
+            return Optional.of(userRepository.save(user));
+        }
+        return Optional.empty();
     }
 }
