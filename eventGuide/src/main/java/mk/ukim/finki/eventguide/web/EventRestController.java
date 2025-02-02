@@ -86,6 +86,7 @@ public class EventRestController {
     @GetMapping("/filter")
     public List<Event> filterEventsByDate(@RequestParam LocalDate date) {
         return this.eventService.filterEventsByDate(date);
+    }
 
     @GetMapping("/interested/{userId}")
     public ResponseEntity<List<Event>> getInterestedEvents(@PathVariable Long userId) {
