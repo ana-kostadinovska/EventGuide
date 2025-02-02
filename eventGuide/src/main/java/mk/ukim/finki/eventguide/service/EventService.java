@@ -15,4 +15,6 @@ public interface EventService {
     Optional<Event> save(String name, String artist, String description, LocalDate date, LocalTime time, Long local_id);
     Optional<Event> edit(Long id,String name, String artist, String description, LocalDate date, LocalTime time, Long local_id);
     void deleteById(Long id);
+    List<Event> searchEvents(String name, String location);
+    List<Event> filterEventsByDate(LocalDate date);
 }

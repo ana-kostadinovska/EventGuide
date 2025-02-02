@@ -66,4 +66,15 @@ public class EventRestController {
         return ResponseEntity.badRequest().build();
     }
 
+    @GetMapping("/search")
+    public List<Event> searchEvents(
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) String location) {
+        return this.eventService.searchEvents(name, location);
+    }
+
+    @GetMapping("/filter")
+    public List<Event> filterEventsByDate(@RequestParam LocalDate date) {
+        return this.eventService.filterEventsByDate(date);
+    }
 }
