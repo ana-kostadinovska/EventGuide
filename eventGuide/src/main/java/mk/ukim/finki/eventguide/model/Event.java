@@ -1,6 +1,7 @@
 package mk.ukim.finki.eventguide.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -30,8 +31,8 @@ public class Event {
     private Integer interested;
 
     @ManyToOne
-    @JsonBackReference
     @JoinColumn(name = "local_id", nullable = false)
+    @JsonIgnoreProperties("events")
     private Local local;
 
     @ManyToMany(mappedBy = "interest")  // Reference to User's interest field
