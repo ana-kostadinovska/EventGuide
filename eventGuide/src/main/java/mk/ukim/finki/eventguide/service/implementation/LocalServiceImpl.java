@@ -35,14 +35,13 @@ public class LocalServiceImpl implements LocalService {
     }
 
     @Override
-    public Optional<Local> edit(Long id, String name, String location, String workingHours, String contact_number, LocalType type, List<Event> events) {
+    public Optional<Local> edit(Long id, String name, String location, String workingHours, String contact_number, LocalType type) {
         Local local=localRepository.findById(id).get();
         local.setName(name);
         local.setLocation(location);
         local.setWorkingHours(workingHours);
         local.setContact_number(contact_number);
         local.setType(type);
-        local.setEvents(events);
         return Optional.of(this.localRepository.save(local));
     }
 

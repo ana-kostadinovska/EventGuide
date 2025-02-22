@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Add local</title>
+</head>
+<body>
+
+<h1>Add Local</h1>
+
+<form th:action="@{/locals/add}" method="post">
+  <label for="name">Name:</label>
+  <input type="text" id="name" name="name" required><br>
+
+  <label for="location">Location:</label>
+  <input type="text" id="location" name="location" required><br>
+
+  <label for="workingHours">Working Hours:</label>
+  <input type="text" id="workingHours" name="workingHours" required><br>
+
+  <label for="contactNumber">Contact Number:</label>
+  <input type="text" id="contactNumber" name="contactNumber"  required><br>
+
+  <label for="type">Type:</label>
+  <select id="type" name="type" required>
+    <option value="RESTAURANT">Restaurant</option>
+    <option value="CAFE">Café</option>
+    <option value="BAR">Bar</option>
+    <option value="NIGHT_CLUB">Night club</option>
+    <option value="PUB">Pub</option>
+  </select><br>
+
+  <button type="submit">Submit</button>
+</form>
+
+</body>
+</html>
