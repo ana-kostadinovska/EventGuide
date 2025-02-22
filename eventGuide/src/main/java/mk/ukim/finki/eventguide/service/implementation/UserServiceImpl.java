@@ -6,6 +6,8 @@ import mk.ukim.finki.eventguide.model.User;
 import mk.ukim.finki.eventguide.repository.EventRepository;
 import mk.ukim.finki.eventguide.repository.UserRepository;
 import mk.ukim.finki.eventguide.service.UserService;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -103,5 +105,15 @@ public class UserServiceImpl implements UserService {
 
     public Optional<User> findBySub(String sub) {
         return userRepository.findBySub(sub);
+    }
+
+
+    @Override
+    public Optional<User> getLoggedInUser(Authentication authentication) {
+        if (authentication instanceof JwtAuthenticationToken jwtAuthToken) {
+            String sub = jwtAuthToken.getToken().getClaimAsString("sub");
+            return userRepository.findBySub(sub);
+        }
+        return Optional.empty();
     }
 }

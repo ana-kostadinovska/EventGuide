@@ -137,4 +137,10 @@ public class LocalController {
 
         return "redirect:/locals";
     }
+
+    @GetMapping("{id}/events/add")
+    public String showAddEventForm(@PathVariable Long id, Model model, Authentication authentication) {
+        model.addAttribute("localId", id);
+        return "add-event";
+    }
 }

@@ -47,13 +47,14 @@ public class Event {
     public Event() {
     }
 
-    public Event(String name, String artist, String description, LocalDate date, LocalTime time, Local local) {
+    public Event(String name, String artist, String description, LocalDate date, LocalTime time, Local local, User user) {
         this.name = name;
         this.artist = artist;
         this.description = description;
         this.date = date;
         this.time = time;
         this.local = local;
-        interested=0;
+        this.user = user;
+        this.interested = 0;
     }
 }

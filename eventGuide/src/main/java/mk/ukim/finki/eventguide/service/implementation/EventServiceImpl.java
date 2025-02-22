@@ -36,9 +36,9 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public Optional<Event> save(String name, String artist, String description, LocalDate date, LocalTime time, Long local_id) {
+    public Optional<Event> save(String name, String artist, String description, LocalDate date, LocalTime time, Long local_id, User user) {
         Local local=this.localRepository.findById(local_id).get();
-        Event event = new Event(name, artist, description, date, time, local);
+        Event event = new Event(name, artist, description, date, time, local, user);
         return Optional.of(this.eventRepository.save(event));
     }
 

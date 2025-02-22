@@ -2,6 +2,7 @@ package mk.ukim.finki.eventguide.service;
 
 import mk.ukim.finki.eventguide.model.Event;
 import mk.ukim.finki.eventguide.model.User;
+import org.springframework.security.core.Authentication;
 
 import java.util.List;
 import java.util.Optional;
@@ -20,4 +21,6 @@ public interface UserService {
     Optional<User> addInterest(Long userId, Long eventId);
 
     Optional<User> removeInterest(Long userId, Long eventId);
+
+    Optional<User> getLoggedInUser(Authentication authentication);
 }
