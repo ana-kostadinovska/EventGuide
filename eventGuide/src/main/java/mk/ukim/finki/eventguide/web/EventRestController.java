@@ -1,14 +1,20 @@
 package mk.ukim.finki.eventguide.web;
 
 import mk.ukim.finki.eventguide.model.Event;
+import mk.ukim.finki.eventguide.model.User;
+import mk.ukim.finki.eventguide.model.dto.EventAddRequest;
 import mk.ukim.finki.eventguide.service.EventService;
+import mk.ukim.finki.eventguide.service.UserService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/events")
@@ -16,9 +22,11 @@ import java.util.Map;
 public class EventRestController {
 
     private final EventService eventService;
+    private final UserService userService;
 
-    public EventRestController(EventService eventService) {
+    public EventRestController(EventService eventService, UserService userService) {
         this.eventService = eventService;
+        this.userService = userService;
     }
 
     @GetMapping
@@ -44,17 +52,18 @@ public class EventRestController {
 
     @PostMapping("/add")
     public ResponseEntity<Event> save(
-            @RequestParam String name,
-            @RequestParam String artist,
-            @RequestParam String description,
-            @RequestParam LocalDate date,
-            @RequestParam LocalTime time,
-            @RequestParam Long local_id
+            @RequestBody EventAddRequest request,
+            Authentication authentication // Add Authentication to get the logged-in user
     ) {
-        return this.eventService.save(name, artist, description, date, time, local_id)
+        Optional<User> userOptional = userService.getLoggedInUser(authentication);
+
+        User user = userOptional.get();
+
+        return this.eventService.save(request.name, request.artist, request.description, request.date, request.time, request.local_id, user)
                 .map(event -> ResponseEntity.ok().body(event))
                 .orElseGet(() -> ResponseEntity.badRequest().build());
     }
+
 
     @PutMapping("/edit/{id}")
     public ResponseEntity<Event> save(@PathVariable Long id,
