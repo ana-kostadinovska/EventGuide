@@ -126,4 +126,15 @@ public class LocalController {
 
         return "redirect:/locals";
     }
+
+    @PostMapping("/delete/{id}")
+    public String deleteLocal(@PathVariable Long id, Authentication authentication) {
+        String response = apiService.deleteData("/locals/delete/" + id, authentication);
+
+        if (response.startsWith("redirect:")) {
+            return response;
+        }
+
+        return "redirect:/locals";
+    }
 }
