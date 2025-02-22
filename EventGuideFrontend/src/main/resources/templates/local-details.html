@@ -87,3 +87,11 @@
         </p>
     </li>
 </ul>
+
+<form th:action="@{/locals/{id}/events/add(id=${local.id})}" method="get">
+    <button type="submit">Add event</button>
+</form>
+
+<a href="/locals">Back to List</a>
+</body>
+</html>

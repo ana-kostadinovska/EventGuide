@@ -6,6 +6,8 @@ import mk.ukim.finki.eventguide.model.User;
 import mk.ukim.finki.eventguide.repository.EventRepository;
 import mk.ukim.finki.eventguide.repository.UserRepository;
 import mk.ukim.finki.eventguide.service.UserService;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -32,11 +34,11 @@ public class UserServiceImpl implements UserService {
         return userRepository.findById(id);
     }
 
-    @Override
-    public Optional<User> save(String username, String name, String surname, String email, List<Event> events) {
-        User user=new User(username,name,surname,email,events);
-        return Optional.of(this.userRepository.save(user));
-    }
+//    @Override
+//    public Optional<User> save(String username, String name, String surname, String email, List<Event> events) {
+//        User user=new User(username,name,surname,email,events);
+//        return Optional.of(this.userRepository.save(user));
+//    }
 
 
     @Override
@@ -52,6 +54,7 @@ public class UserServiceImpl implements UserService {
     public void deleteById(Long id) {
         this.userRepository.deleteById(id);
     }
+
     @Override
     @Transactional
     public Optional<User> addInterest(Long userId, Long eventId) {
@@ -88,6 +91,28 @@ public class UserServiceImpl implements UserService {
             event.setInterested(event.getInterestedUsers().size()); // Update interest count
 
             return Optional.of(userRepository.save(user));
+        }
+        return Optional.empty();
+    }
+
+    public void checkAndAddUser(String sub, String username, String name, String surname, String email) {
+        Optional<User> existingUser = userRepository.findBySub(sub);
+        if (existingUser.isEmpty()) {
+            User newUser = new User(sub, username, name, surname, email, List.of());
+            userRepository.save(newUser);
+        }
+    }
+
+    public Optional<User> findBySub(String sub) {
+        return userRepository.findBySub(sub);
+    }
+
+
+    @Override
+    public Optional<User> getLoggedInUser(Authentication authentication) {
+        if (authentication instanceof JwtAuthenticationToken jwtAuthToken) {
+            String sub = jwtAuthToken.getToken().getClaimAsString("sub");
+            return userRepository.findBySub(sub);
         }
         return Optional.empty();
     }
