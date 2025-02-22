@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Local</title>
+</head>
+<body>
+
+<h1>Edit Local</h1>
+
+<form th:action="@{/locals/edit/{id}(id=${local.id})}" method="post">
+    <input type="hidden" name="_method" value="put"/>
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" th:value="${local.name}" required><br>
+
+    <label for="location">Location:</label>
+    <input type="text" id="location" name="location" th:value="${local.location}" required><br>
+
+    <label for="workingHours">Working Hours:</label>
+    <input type="text" id="workingHours" name="workingHours" th:value="${local.workingHours}" required><br>
+
+    <label for="contact_number">Contact Number:</label>
+    <input type="text" id="contact_number" name="contact_number" th:value="${local.contact_number}" required><br>
+
+    <label for="type">Type:</label>
+    <select id="type" name="type" required>
+        <option value="RESTAURANT" th:selected="${local.type == 'RESTAURANT'}">Restaurant</option>
+        <option value="CAFE" th:selected="${local.type == 'CAFE'}">Café</option>
+        <option value="BAR" th:selected="${local.type == 'BAR'}">Bar</option>
+        <option value="NIGHT_CLUB" th:selected="${local.type == 'NIGHT_CLUB'}">Night club</option>
+        <option value="PUB" th:selected="${local.type == 'PUB'}">Pub</option>
+    </select><br>
+
+    <button type="submit">Save Changes</button>
+</form>
+
+</body>
+</html>

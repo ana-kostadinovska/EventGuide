@@ -46,17 +46,16 @@ public class LocalRestController {
                 .orElseGet(() -> ResponseEntity.badRequest().build());
     }
 
-    @PostMapping("/edit/{id}")
+    @PutMapping("/edit/{id}")
     public ResponseEntity<Local> edit(
             @PathVariable Long id,
             @RequestParam String name,
             @RequestParam String location,
             @RequestParam String workingHours,
             @RequestParam String contact_number,
-            @RequestParam LocalType type,
-            @RequestParam List<Event> events
+            @RequestParam LocalType type
     ) {
-        return this.localService.edit(id,name, location, workingHours, contact_number, type, events)
+        return this.localService.edit(id,name, location, workingHours, contact_number, type)
                 .map(local -> ResponseEntity.ok().body(local))
                 .orElseGet(() -> ResponseEntity.badRequest().build());
     }
