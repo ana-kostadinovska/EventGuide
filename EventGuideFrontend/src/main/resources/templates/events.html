@@ -17,6 +17,9 @@
                 <p th:text="${event.artist}"></p>
                 <p th:text="${event.date}">Date: </p>
                 <p th:text="${event.time}">Time: </p>
+                <form th:action="@{/events/delete/{id}(id=${event.id})}" method="post" style="display: inline;">
+                    <button type="submit">Delete</button>
+                </form>
             </li>
         </th:block>
     </ul>

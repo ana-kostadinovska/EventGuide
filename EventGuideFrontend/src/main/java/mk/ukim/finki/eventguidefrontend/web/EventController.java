@@ -72,5 +72,13 @@ public class EventController {
 
         return "redirect:/locals/"+local_id;
     }
+
+    @PostMapping("/delete/{id}")
+    public String deleteLocal(@PathVariable Long id, Authentication authentication) {
+        String response = apiService.deleteData("/events/delete/" + id, authentication);
+
+        return "redirect:/events";
+    }
+
 }
 

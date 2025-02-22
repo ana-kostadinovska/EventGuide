@@ -76,10 +76,8 @@ public class ApiService {
                     .uri(endpoint)
                     .header(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken)
                     .retrieve()
-                    .toBodilessEntity()
-                    .block()
-                    .getStatusCode()
-                    .is2xxSuccessful() ? "redirect:/locals" : "redirect:/error";
+                    .bodyToMono(String.class)
+                    .block();
         } catch (WebClientResponseException ex) {
             return handleException(ex);
         }
