@@ -25,7 +25,7 @@ public class LocalController {
     public String getLocals(@RequestParam(required = false) String type, Model model) {
         RestTemplate restTemplate = new RestTemplate();
 
-        String token="Bearer "+"your-token-here";
+        String token="Bearer "+"eyJraWQiOiJYdWhVM3VaeUhZU21XTGxhd0EwR0xXRWtxVWNVXC9Gc1M5NlpKejc1cmh1dz0iLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI3MDVjMjlhYy04MGYxLTcwZjYtZWNkYS01YjE4NmE1NTI5NTciLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAuZXUtbm9ydGgtMS5hbWF6b25hd3MuY29tXC9ldS1ub3J0aC0xX3NlQUNGWXFFSSIsInZlcnNpb24iOjIsImNsaWVudF9pZCI6IjZuY2FocjlnMnA3NDU4aG44dWJvMHI5OTgzIiwib3JpZ2luX2p0aSI6IjIyNDI4NjdiLTNkZmItNDAzMC1iODNiLWViZTY3Y2EwNGMzOSIsInRva2VuX3VzZSI6ImFjY2VzcyIsInNjb3BlIjoicGhvbmUgb3BlbmlkIGVtYWlsIiwiYXV0aF90aW1lIjoxNzQwMjI5OTkwLCJleHAiOjE3NDAyMzAyOTAsImlhdCI6MTc0MDIyOTk5MCwianRpIjoiNjQ0YjQxZDItYzk3NC00ZjUzLWI2NmEtNjM0MGNmODUwZDhjIiwidXNlcm5hbWUiOiI3MDVjMjlhYy04MGYxLTcwZjYtZWNkYS01YjE4NmE1NTI5NTcifQ.14m_tg_oEQexzJtVjdj3huzeMcTiz7w9fOVhbL6yyaRycxL2xyC6cNrJ-ojCUIngq7VQPe6efsq_NXV8sMH2Hn2xANAuPc_bCziSTGU1l35c7qn1LXItbON3CCS8h_WGr5DptyDcNlqc-Iz2AKkcKTKYZzNOsTTUpI9VV72QtQRFt2QzcCD8O59Nehaf4BvqCUiKkncXMR_JMIMsdudqwP2jUoRbkhC86tXrMFl3mFdXbzFoZIThhWGgtB7q383awdIRFwjfpnj2-LJZOiX8sxOrJ5ZJod9K-pRBFyn121INJwf1kj0uysdtChFAiAXdeizAT4lfz92o67p55IsEww";
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", token);
 
@@ -45,7 +45,7 @@ public class LocalController {
     public String getLocalDetails(@PathVariable Long id, Model model) {
         RestTemplate restTemplate = new RestTemplate();
 
-        String token="Bearer "+"your-token-here";
+        String token="Bearer "+"eyJraWQiOiJYdWhVM3VaeUhZU21XTGxhd0EwR0xXRWtxVWNVXC9Gc1M5NlpKejc1cmh1dz0iLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI3MDVjMjlhYy04MGYxLTcwZjYtZWNkYS01YjE4NmE1NTI5NTciLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAuZXUtbm9ydGgtMS5hbWF6b25hd3MuY29tXC9ldS1ub3J0aC0xX3NlQUNGWXFFSSIsInZlcnNpb24iOjIsImNsaWVudF9pZCI6IjZuY2FocjlnMnA3NDU4aG44dWJvMHI5OTgzIiwib3JpZ2luX2p0aSI6IjIyNDI4NjdiLTNkZmItNDAzMC1iODNiLWViZTY3Y2EwNGMzOSIsInRva2VuX3VzZSI6ImFjY2VzcyIsInNjb3BlIjoicGhvbmUgb3BlbmlkIGVtYWlsIiwiYXV0aF90aW1lIjoxNzQwMjI5OTkwLCJleHAiOjE3NDAyMzAyOTAsImlhdCI6MTc0MDIyOTk5MCwianRpIjoiNjQ0YjQxZDItYzk3NC00ZjUzLWI2NmEtNjM0MGNmODUwZDhjIiwidXNlcm5hbWUiOiI3MDVjMjlhYy04MGYxLTcwZjYtZWNkYS01YjE4NmE1NTI5NTcifQ.14m_tg_oEQexzJtVjdj3huzeMcTiz7w9fOVhbL6yyaRycxL2xyC6cNrJ-ojCUIngq7VQPe6efsq_NXV8sMH2Hn2xANAuPc_bCziSTGU1l35c7qn1LXItbON3CCS8h_WGr5DptyDcNlqc-Iz2AKkcKTKYZzNOsTTUpI9VV72QtQRFt2QzcCD8O59Nehaf4BvqCUiKkncXMR_JMIMsdudqwP2jUoRbkhC86tXrMFl3mFdXbzFoZIThhWGgtB7q383awdIRFwjfpnj2-LJZOiX8sxOrJ5ZJod9K-pRBFyn121INJwf1kj0uysdtChFAiAXdeizAT4lfz92o67p55IsEww";
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", token);
 
