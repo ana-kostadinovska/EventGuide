@@ -1,13 +1,17 @@
 package mk.ukim.finki.eventguide.web;
 
 import mk.ukim.finki.eventguide.model.*;
+import mk.ukim.finki.eventguide.model.dto.LocalUpdateRequest;
 import mk.ukim.finki.eventguide.service.LocalService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 
 @RestController
 @RequestMapping("/api/locals")
@@ -34,14 +38,9 @@ public class LocalRestController {
 
     @PostMapping("/add")
     public ResponseEntity<Local> save(
-            @RequestParam String name,
-            @RequestParam String location,
-            @RequestParam String workingHours,
-            @RequestParam String contact_number,
-            @RequestParam LocalType type,
-            @RequestParam List<Event> events
+            @RequestBody LocalUpdateRequest request
     ) {
-        return this.localService.save(name, location, workingHours, contact_number, type, events)
+        return this.localService.save(request.getName(), request.getLocation(), request.getWorkingHours(), request.getWorkingHours(), request.getType(), null )
                 .map(local -> ResponseEntity.ok().body(local))
                 .orElseGet(() -> ResponseEntity.badRequest().build());
     }
@@ -49,14 +48,16 @@ public class LocalRestController {
     @PutMapping("/edit/{id}")
     public ResponseEntity<Local> edit(
             @PathVariable Long id,
-            @RequestParam String name,
-            @RequestParam String location,
-            @RequestParam String workingHours,
-            @RequestParam String contact_number,
-            @RequestParam LocalType type
+            @RequestBody LocalUpdateRequest request
     ) {
-        return this.localService.edit(id,name, location, workingHours, contact_number, type)
-                .map(local -> ResponseEntity.ok().body(local))
+        return this.localService.edit(
+                        id,
+                        request.getName(),
+                        request.getLocation(),
+                        request.getWorkingHours(),
+                        request.getContactNumber(),
+                        request.getType()
+                ).map(local -> ResponseEntity.ok().body(local))
                 .orElseGet(() -> ResponseEntity.badRequest().build());
     }
 
