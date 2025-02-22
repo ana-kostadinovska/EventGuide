@@ -30,7 +30,9 @@ public class LocalController {
         }
 
         model.addAttribute("locals", apiService.parseJsonList(response));
-        return "locals";
+        model.addAttribute("bodyContent", "home");
+
+        return "template";
     }
 
     @GetMapping("/{id}")
@@ -42,7 +44,9 @@ public class LocalController {
         }
 
         model.addAttribute("local", apiService.parseJsonMap(response));
-        return "local-details";
+        model.addAttribute("bodyContent", "local-details");
+
+        return "template";
     }
 
     @GetMapping("/edit/{id}")
