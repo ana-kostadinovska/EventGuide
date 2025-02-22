@@ -1,25 +1,90 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title th:text="${local.name}">Local Details</title>
-</head>
-<body>
-<h1 th:text="${local.name}"></h1>
+<!-- Local Info -->
+<div class="local-info-container" style="
+    background: #ffffff;
+    max-width: 650px;
+    margin: 30px auto;
+    padding: 25px;
+    text-align: left;
+    border-radius: 1px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+    transition: box-shadow 0.3s ease-in-out;">
 
-<p><strong>Type:</strong> <span th:text="${local.type}"></span></p>
-<p><strong>Location:</strong> <span th:text="${local.location}"></span></p>
-<p><strong>Working Hours:</strong> <span th:text="${local.workingHours}"></span></p>
-<p><strong>Contact Number:</strong> <span th:text="${local.contact_number}"></span></p>
+    <p class="local-info" style="font-size: 24px; margin-bottom: 12px; line-height: 1.5; color: #222;">
+        <strong th:text="${local.name}" style="color: #222; font-weight: 1000;"></strong>
+    </p>
 
-<h2>Events</h2>
-<ul>
-    <li th:each="event : ${local.events}">
-        <h3 th:text="${event.name}"></h3>
-        <p><strong>Artist:</strong> <span th:text="${event.artist}"></span></p>
-        <p><strong>Description:</strong> <span th:text="${event.description}"></span></p>
-        <p><strong>Date:</strong> <span th:text="${event.date}"></span></p>
-        <p><strong>Time:</strong> <span th:text="${event.time}"></span></p>
+    <p class="local-info" style="font-size: 17px; margin-bottom: 12px; line-height: 1.5; color: #444;">
+        <strong style="color: #222; font-weight: 600;">Type:</strong>
+        <span th:text="${local.type}"></span>
+    </p>
+    <p class="local-info" style="font-size: 17px; margin-bottom: 12px; line-height: 1.5; color: #444;">
+        <strong style="color: #222; font-weight: 600;">Location:</strong>
+        <span th:text="${local.location}"></span>
+    </p>
+    <p class="local-info" style="font-size: 17px; margin-bottom: 12px; line-height: 1.5; color: #444;">
+        <strong style="color: #222; font-weight: 600;">Working Hours:</strong>
+    <table style="width: 100%; border-collapse: collapse; margin-top: 10px;">
+        <tr th:each="hour : ${#strings.arraySplit(#strings.replace(#strings.replace(local.workingHours, '[', ''), ']', ''), ',')}">
+            <td style="font-size: 15px; color: #555; padding: 8px; border-bottom: 1px solid #ddd; font-weight: 600;">
+                <span th:text="${#strings.trim(#strings.substringBefore(hour, ':'))}"></span>
+            </td>
+            <td style="font-size: 15px; color: #555; padding: 8px; border-bottom: 1px solid #ddd;">
+                <span th:text="${#strings.trim(#strings.substringAfter(hour, ':'))}"></span>
+            </td>
+        </tr>
+    </table>
+    </p>
+    <br/>
+    <p th:if="${local.contact_number != null or local.contact_number != 'N/A'}"
+       class="local-info"
+       style="font-size: 17px; margin-bottom: 12px; line-height: 1.5; color: #444;">
+        <strong style="color: #222; font-weight: 600;">Contact Number:</strong>
+        <span th:text="${local.contact_number}"></span>
+    </p>
+</div>
+
+<!-- Events Section -->
+<h2 class="section-title" style="
+    font-size: 26px;
+    color: #111;
+    margin-top: 50px;
+    margin-bottom: 15px;
+    text-align: center;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;">
+    Events
+</h2>
+
+<ul class="events-list" style="list-style: none; padding: 0; margin: 0 auto 50px auto; max-width: 750px;">
+    <li class="event-item" th:each="event : ${local.events}" style="
+        background: #fff;
+        margin-bottom: 22px;
+        padding: 22px;
+        text-align: left;
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        transition: transform 0.2s ease-in-out, box-shadow 0.3s ease-in-out;">
+
+        <h3 class="event-title" th:text="${event.name}"
+            style="font-size: 22px; margin-bottom: 12px; color: #222; font-weight: 700;"></h3>
+
+        <p class="event-detail" style="font-size: 15px; margin: 8px 0; color: #555; line-height: 1.6;">
+            <strong style="color: #111; font-weight: 600;">Artist:</strong>
+            <span th:text="${event.artist}"></span>
+        </p>
+        <p class="event-detail" style="font-size: 15px; margin: 8px 0; color: #555; line-height: 1.6;">
+            <strong style="color: #111; font-weight: 600;">Description:</strong>
+            <span th:text="${event.description}"></span>
+        </p>
+        <p class="event-detail" style="font-size: 15px; margin: 8px 0; color: #555; line-height: 1.6;">
+            <strong style="color: #111; font-weight: 600;">Date:</strong>
+            <span th:text="${event.date}"></span>
+        </p>
+        <p class="event-detail" style="font-size: 15px; margin: 8px 0; color: #555; line-height: 1.6;">
+            <strong style="color: #111; font-weight: 600;">Time:</strong>
+            <span th:text="${event.time}"></span>
+        </p>
     </li>
 </ul>
 

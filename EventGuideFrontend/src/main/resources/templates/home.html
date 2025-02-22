@@ -1,0 +1,37 @@
+<div xmlns:th="http://www.thymeleaf.org">
+
+    <!-- Info Section -->
+    <section class="hero" style="background: url('img.png') no-repeat center center/cover;
+            color: black;
+            text-align: center;
+            padding: 80px 20px;
+    ">
+        <h1>EVENT GUIDE</h1>
+        <p><em>A wonderful serenity has taken possession of my entire soul, like these sweet mornings of spring<br/>which I enjoy with my whole heart.</em></p>
+    </section>
+
+    <!-- Events Grid -->
+    <form action="/locals" method="get" style="max-width: 380px; margin: 10px 20px -20px 50px; padding: 10px; background: #ffffff; border-radius: 1px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12); transition: box-shadow 0.3s ease-in-out; text-align: left; display: flex; align-items: center; gap: 10px;">
+        <label for="type" style="font-size: 14px; color: #444; font-weight: 600;">Filter by type:</label>
+        <select id="type" name="type" style="font-size: 14px; padding: 6px; color: #444; border: 1px solid #ddd; border-radius: 1px;">
+            <option value="" style="color: #444;">All</option>
+            <option value="RESTAURANT" th:selected="${param.type == 'RESTAURANT'}" style="color: #444;">Restaurant</option>
+            <option value="CAFE" th:selected="${param.type == 'CAFE'}" style="color: #444;">Café</option>
+            <option value="BAR" th:selected="${param.type == 'BAR'}" style="color: #444;">Bar</option>
+            <option value="NIGHT_CLUB" th:selected="${param.type == 'NIGHT_CLUB'}" style="color: #444;">Night club</option>
+            <option value="PUB" th:selected="${param.type == 'PUB'}" style="color: #444;">Pub</option>
+        </select>
+        <button type="submit" style="font-size: 14px; padding: 6px 12px; background-color: #222; color: white; border: none; border-radius: 1px; cursor: pointer; transition: background-color 0.3s ease-in-out;">
+            Apply Filter
+        </button>
+    </form>
+    <section class="blog-grid">
+        <div class="blog-post" th:each="local : ${locals}">
+            <img src="thumbnail.jpg" alt="Blog post Thumbnail">
+            <h3 th:text="${local.name}"></h3>
+            <p class="author">BY <strong>MARK STONE</strong> | <span th:text="${local.type}"></span> | X COMMENTS</p>
+            <p class="excerpt" >INFO</p>
+            <a th:href="@{/locals/{id}(id=${local.id})}">Read more »</a>
+        </div>
+    </section>
+</div>
