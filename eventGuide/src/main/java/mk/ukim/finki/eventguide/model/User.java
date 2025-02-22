@@ -18,6 +18,7 @@ public class User {
     @GeneratedValue
     private Long id;
 
+    private String sub;
     private String username;
 
     private String name;
@@ -42,7 +43,8 @@ public class User {
     public User() {
     }
 
-    public User(String username, String name, String surname, String email, List<Event> events) {
+    public User(String sub, String username, String name, String surname, String email, List<Event> events) {
+        this.sub = sub;
         this.username = username;
         this.name = name;
         this.surname = surname;
