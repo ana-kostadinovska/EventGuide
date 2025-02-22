@@ -1,0 +1,27 @@
+<div xmlns:th="http://www.thymeleaf.org">
+    <!-- Info Section -->
+    <section class="hero">
+        <h1>BLOG GRID</h1>
+        <p><em>A wonderful serenity has taken possession of my entire soul, like these sweet mornings of spring which I enjoy with my whole heart.</em></p>
+    </section>
+
+    <!-- Events Grid -->
+    <section class="blog-grid">
+
+        <div class="blog-post">
+            <img src="thumbnail.jpg" alt="Blog post Thumbnail">
+            <h3>OUR TRIP TO THE ALPS</h3>
+            <p class="author">BY <strong>MARK STONE</strong> | 23 NOVEMBER | 3 COMMENTS</p>
+            <p class="excerpt">A wonderful serenity has taken possession of my entire soul, like these sweet mornings of spring which I enjoy with my whole heart.</p>
+            <a href="#">Read more »</a>
+        </div>
+
+        <div class="blog-post" th:each="event : ${events}">
+            <img src="thumbnail.jpg" alt="Blog post Thumbnail">
+            <h3 th:text="${local.name}"></h3>
+            <p class="author">BY <strong>MARK STONE</strong> | <span th:text="${local.type}"></span> | X COMMENTS</p>
+            <p class="excerpt" >INFO</p>
+            <a th:href="@{/locals/{id}(id=${local.id})}">Read more »</a>
+        </div>
+    </section>
+</div>

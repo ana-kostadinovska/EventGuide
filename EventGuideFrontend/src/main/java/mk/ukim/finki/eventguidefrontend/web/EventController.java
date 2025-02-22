@@ -33,7 +33,9 @@ public class EventController {
         );
 
         model.addAttribute("events", response.getBody());
-        return "events";
+        model.addAttribute("bodyContent", "home");
+
+        return "template";
     }
 
     @GetMapping("/{id}")

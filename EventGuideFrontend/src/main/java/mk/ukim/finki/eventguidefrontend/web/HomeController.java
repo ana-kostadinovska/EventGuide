@@ -32,6 +32,7 @@ public class HomeController {
             }
         }
 
+
         return "template"; // Returns the name of the HTML file without the .html extension
     }
 }
