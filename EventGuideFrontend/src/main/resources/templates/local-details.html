@@ -85,6 +85,10 @@
             <strong style="color: #111; font-weight: 600;">Time:</strong>
             <span th:text="${event.time}"></span>
         </p>
+
+        <form th:action="@{/events/edit/{id1}(id1=${event.id})}" method="get">
+            <button type="submit">Edit event</button>
+        </form>
     </li>
 </ul>
 

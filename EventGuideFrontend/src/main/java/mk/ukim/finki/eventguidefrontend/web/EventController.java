@@ -80,5 +80,54 @@ public class EventController {
         return "redirect:/events";
     }
 
+    @GetMapping("/edit/{id}")
+    public String showEditForm(@PathVariable Long id,
+                               Model model,
+                               Authentication authentication) {
+
+        String eventResponse = apiService.fetchData("/events/" + id, authentication);
+        if (eventResponse.startsWith("redirect:")) {
+            return eventResponse;
+        }
+
+        String eventsResponse = apiService.fetchData("/events", authentication);
+        if (eventsResponse.startsWith("redirect:")) {
+            return eventsResponse;
+        }
+
+        Map<String, Object> event = apiService.parseJsonMap(eventResponse);
+
+        model.addAttribute("event", event);
+
+        return "edit-event";
+    }
+
+    @PostMapping("/edit/{id}")
+    public String editEvent(@PathVariable Long id,
+                            @RequestParam String name,
+                            @RequestParam String artist,
+                            @RequestParam String description,
+                            @RequestParam LocalDate date,
+                            @RequestParam LocalTime time,
+                            @RequestParam Long local_id,
+                            Authentication authentication) {
+        Map<String, Object> updatedData = Map.of(
+                "name", name,
+                "artist", artist,
+                "description", description,
+                "date", date.toString(),
+                "time", time.toString(),
+                "local_id", local_id
+        );
+
+        String response = apiService.updateData("/events/edit/" + id, updatedData, authentication);
+
+        if (response.startsWith("redirect:")) {
+            return response;
+        }
+
+        return "redirect:/locals/"+local_id;
+    }
+
 }
 

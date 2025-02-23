@@ -67,13 +67,8 @@ public class EventRestController {
 
     @PutMapping("/edit/{id}")
     public ResponseEntity<Event> save(@PathVariable Long id,
-                                      @RequestParam String name,
-                                      @RequestParam String artist,
-                                      @RequestParam String description,
-                                      @RequestParam LocalDate date,
-                                      @RequestParam LocalTime time,
-                                      @RequestParam Long local_id) {
-        return this.eventService.edit(id, name, artist, description, date, time, local_id)
+                                      @RequestBody EventAddRequest request) {
+        return this.eventService.edit(id, request.name, request.artist, request.description, request.date, request.time, request.local_id)
                 .map(event -> ResponseEntity.ok().body(event))
                 .orElseGet(() -> ResponseEntity.badRequest().build());
     }

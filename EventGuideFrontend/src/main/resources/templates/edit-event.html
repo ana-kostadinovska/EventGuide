@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Local</title>
+</head>
+<body>
+
+<h1>Edit Event</h1>
+
+<form th:action="@{/events/edit/{id}(id=${event.id})}" method="post">
+    <label for="name">Event Name:</label>
+    <input type="text" id="name" name="name" th:value="${event.name}" required><br>
+
+    <label for="artist">Artist:</label>
+    <input type="text" id="artist" name="artist" th:value="${event.artist}" required><br>
+
+    <label for="description">Description:</label>
+    <textarea id="description" name="description" th:text="${event.description}" required></textarea><br>
+
+    <label for="date">Date:</label>
+    <input type="date" id="date" name="date" th:value="${event.date}" required><br>
+
+    <label for="time">Time:</label>
+    <input type="time" id="time" name="time" th:value="${event.time}" required><br>
+
+    <input type="hidden" id="local_id" name="local_id" th:value="${event.local.id}">
+
+    <button type="submit">Save Changes</button>
+</form>
+
+</body>
+</html>
