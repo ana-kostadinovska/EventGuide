@@ -3,6 +3,8 @@ package mk.ukim.finki.eventguide.service.implementation;
 import mk.ukim.finki.eventguide.model.*;
 import mk.ukim.finki.eventguide.repository.LocalRepository;
 import mk.ukim.finki.eventguide.service.LocalService;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -30,13 +32,13 @@ public class LocalServiceImpl implements LocalService {
 
     @Override
     public Optional<Local> save(String name, String location, String workingHours, String contact_number, LocalType type, List<Event> events) {
-        Local local=new Local(name,location,workingHours,contact_number,type,events);
+        Local local = new Local(name, location, workingHours, contact_number, type, events);
         return Optional.of(this.localRepository.save(local));
     }
 
     @Override
     public Optional<Local> edit(Long id, String name, String location, String workingHours, String contact_number, LocalType type) {
-        Local local=localRepository.findById(id).get();
+        Local local = localRepository.findById(id).get();
         local.setName(name);
         local.setLocation(location);
         local.setWorkingHours(workingHours);
@@ -51,7 +53,14 @@ public class LocalServiceImpl implements LocalService {
     }
 
     @Override
-    public List<Local> findByType(LocalType type) {
-        return localRepository.findByType(type);
+    public List<Local> findByType(LocalType type, int page) {
+        Pageable pageable = PageRequest.of(page, 9);
+        return localRepository.findByType(type, pageable).getContent();
+    }
+
+    @Override
+    public List<Local> findPaginatedLocals(int page) {
+        Pageable pageable = PageRequest.of(page, 9);
+        return this.localRepository.findAll(pageable).getContent();
     }
 }

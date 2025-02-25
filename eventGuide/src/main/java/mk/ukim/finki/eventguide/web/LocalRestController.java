@@ -25,8 +25,8 @@ public class LocalRestController {
     }
 
     @GetMapping
-    public List<Local> findAll() {
-        return this.localService.findAll();
+    public List<Local> findPaginatedLocals(@RequestParam int page) {
+        return this.localService.findPaginatedLocals(page);
     }
 
     @GetMapping("/{id}")
@@ -40,7 +40,7 @@ public class LocalRestController {
     public ResponseEntity<Local> save(
             @RequestBody LocalUpdateRequest request
     ) {
-        return this.localService.save(request.getName(), request.getLocation(), request.getWorkingHours(), request.getWorkingHours(), request.getType(), null )
+        return this.localService.save(request.getName(), request.getLocation(), request.getWorkingHours(), request.getWorkingHours(), request.getType(), null)
                 .map(local -> ResponseEntity.ok().body(local))
                 .orElseGet(() -> ResponseEntity.badRequest().build());
     }
@@ -64,7 +64,7 @@ public class LocalRestController {
     @DeleteMapping("/delete/{id}")
     public ResponseEntity deleteById(@PathVariable Long id) {
         this.localService.deleteById(id);
-        if(this.localService.findById(id).isEmpty()) return ResponseEntity.ok().build();
+        if (this.localService.findById(id).isEmpty()) return ResponseEntity.ok().build();
         return ResponseEntity.badRequest().build();
     }
 
@@ -76,7 +76,7 @@ public class LocalRestController {
     }
 
     @GetMapping("/filter")
-    public List<Local> getLocalsByType(@RequestParam LocalType type) {
-        return localService.findByType(type);
+    public List<Local> getLocalsByType(@RequestParam LocalType type, @RequestParam int page) {
+        return localService.findByType(type, page);
     }
 }

@@ -5,6 +5,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 import java.util.Map;
 
@@ -20,16 +21,21 @@ public class LocalController {
     }
 
     @GetMapping
-    public String getLocals(@RequestParam(required = false) String type, Model model, Authentication authentication) {
-        String endpoint = (type != null && !type.isEmpty()) ? "/locals/filter?type=" + type : "/locals";
-        String response = apiService.fetchData(endpoint, authentication);
+    public String getLocals(@RequestParam(required = false) String type, @RequestParam(required = false) Integer page, Model model, Authentication authentication) {
+        int pageNumber = (page != null) ? page : 0;
+        String endpoint = "/locals";
 
-        String url = backendUrl;
         if (type != null && !type.isEmpty()) {
-            url += "/filter?type=" + type;
+            endpoint = "/locals/filter?type=" + type;
         }
 
+        endpoint += endpoint.contains("?") ? "&page=" + pageNumber : "?page=" + pageNumber;
+        String response = apiService.fetchData(endpoint, authentication);
+
         model.addAttribute("locals", apiService.parseJsonList(response));
+        model.addAttribute("currentPage", pageNumber);
+        model.addAttribute("totalPages", 4);
+        model.addAttribute("type", type != null ? type : "");
         model.addAttribute("bodyContent", "home");
 
         return "template";
@@ -105,13 +111,13 @@ public class LocalController {
 
     @PostMapping("/add")
     public String addLocal(
-                            @RequestParam String name,
-                            @RequestParam String location,
-                            @RequestParam String workingHours,
-                            @RequestParam String contactNumber,
-                            @RequestParam String type,
-                            Authentication authentication,
-                            Model model) {
+            @RequestParam String name,
+            @RequestParam String location,
+            @RequestParam String workingHours,
+            @RequestParam String contactNumber,
+            @RequestParam String type,
+            Authentication authentication,
+            Model model) {
 
         Map<String, Object> updatedData = Map.of(
                 "name", name,

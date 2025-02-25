@@ -15,5 +15,6 @@ public interface LocalService {
     Optional<Local> save(String name, String location, String workingHours, String contact_number, LocalType type, List<Event>events);
     Optional<Local> edit(Long id,String name, String location, String workingHours, String contact_number, LocalType type);
     void deleteById(Long id);
-    List<Local> findByType(LocalType type);
+    List<Local> findByType(LocalType type, int page);
+    List<Local> findPaginatedLocals(int page);
 }
