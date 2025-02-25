@@ -8,6 +8,7 @@ import mk.ukim.finki.eventguide.repository.LocalRepository;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class DataInit {
@@ -21,7 +22,10 @@ public class DataInit {
     @PostConstruct
     public void init() {
         List<CreateLocalDto> localDtos = LoadDataFromCsv.loadObjectList(CreateLocalDto.class, "places.csv");
-        for (CreateLocalDto dto : localDtos) {
+        List<CreateLocalDto> uniqueList = localDtos.stream()
+                .distinct()
+                .toList();
+        for (CreateLocalDto dto : uniqueList) {
             localRepository.save(new Local(dto.Name, dto.Address, dto.OpeningHours.get(0), dto.PhoneNumber, LocalType.BAR, null));
         }
     }
