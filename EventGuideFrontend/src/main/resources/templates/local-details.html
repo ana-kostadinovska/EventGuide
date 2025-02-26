@@ -56,13 +56,18 @@
     Events
 </h2>
 
-<ul class="events-list" style="list-style: none; padding: 0; margin: 0 auto 50px auto; max-width: 750px;">
+<ul class="events-list" style="list-style: none; padding: 0; margin: 0 auto 50px auto;
+                                text-align: left;
+                                border-radius: 1px;
+                                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+                                max-width: 650px">
+
     <li class="event-item" th:each="event : ${local.events}" style="
         background: #fff;
         margin-bottom: 22px;
         padding: 22px;
         text-align: left;
-        border-radius: 8px;
+        border-radius: 1px;
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         transition: transform 0.2s ease-in-out, box-shadow 0.3s ease-in-out;">
 
@@ -87,15 +92,15 @@
         </p>
 
         <form th:action="@{/events/edit/{id1}(id1=${event.id})}" method="get">
-            <button type="submit">Edit event</button>
+            <button type="submit" style="padding: 5px 10px; font-size: 11px; border-radius: 1px; background: #222; color: white; text-transform: uppercase;">Edit event</button>
         </form>
     </li>
 </ul>
 
 <form th:action="@{/locals/{id}/events/add(id=${local.id})}" method="get">
-    <button type="submit">Add event</button>
+    <button type="submit" style="padding: 10px 20px; font-size: 14px; max-width: 150px; border-radius: 1px; background: #222; color: white; text-transform: uppercase; margin-left: 30px; margin-top: 20px">Add event</button>
 </form>
 
-<a href="/locals">Back to List</a>
+<a href="/locals" style="padding: 10px 20px; border-radius: 1px; background: #f0f0f0; color: black; border: 3px solid #111111; text-transform: uppercase; margin-left: 30px; margin-top: 20px; display: block; max-width: 150px; text-align: center; text-decoration: none; font-size: 14px; margin-bottom: 20px">Back to List</a>
 </body>
 </html>
