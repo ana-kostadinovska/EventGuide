@@ -8,7 +8,6 @@ import mk.ukim.finki.eventguide.repository.LocalRepository;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Component
 public class DataInit {
@@ -22,11 +21,31 @@ public class DataInit {
     @PostConstruct
     public void init() {
         List<CreateLocalDto> localDtos = LoadDataFromCsv.loadObjectList(CreateLocalDto.class, "places.csv");
-        List<CreateLocalDto> uniqueList = localDtos.stream()
+        List<CreateLocalDto> uniqueList = localDtos
+                .stream()
                 .distinct()
                 .toList();
+
         for (CreateLocalDto dto : uniqueList) {
-            localRepository.save(new Local(dto.Name, dto.Address, dto.OpeningHours.get(0), dto.PhoneNumber, LocalType.BAR, null));
+            LocalType localType;
+
+            if (dto.PrimaryType.contains("bar")) {
+                localType = LocalType.BAR;
+            } else if (dto.PrimaryType.contains("restaurant")) {
+                localType = LocalType.RESTAURANT;
+            } else if (dto.PrimaryType.contains("cafe") || dto.PrimaryType.contains("coffee")) {
+                localType = LocalType.CAFE;
+            } else if (dto.PrimaryType.contains("night_club")) {
+                localType = LocalType.NIGHT_CLUB;
+            } else if (dto.PrimaryType.contains("pub")) {
+                localType = LocalType.PUB;
+            } else if (dto.PrimaryType.contains("hotel")) {
+                localType = LocalType.RESTAURANT;
+            } else {
+                localType = LocalType.BAR;
+            }
+
+            localRepository.save(new Local(dto.Name, dto.Address, dto.OpeningHours.get(0), dto.PhoneNumber, localType, null));
         }
     }
 }
