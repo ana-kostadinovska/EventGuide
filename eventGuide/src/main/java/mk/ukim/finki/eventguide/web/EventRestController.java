@@ -49,6 +49,7 @@ public class EventRestController {
         User user = userOptional.get();
 
         Event updatedEvent = eventService.interested(id,user);  // Get the updated event after incrementing interested count
+        userService.addInterest(user.getId(), id);
         Map<String, Integer> response = Map.of("interestedCount", updatedEvent.getInterested());
         return ResponseEntity.ok(response);  // Return just the updated count in the response
     }
