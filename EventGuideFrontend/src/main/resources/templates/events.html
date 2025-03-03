@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>All Events</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
     <style>
         * {
@@ -274,9 +275,17 @@
                     <span th:text="${event.date}">Date: </span> |
                     <span th:text="${event.time}">Time: </span>
                 </div>
-                <form th:action="@{/events/delete/{id}(id=${event.id})}" method="post" style="display: inline;">
-                    <button type="submit" style="padding: 0px 10px; font-size: 12px; border-radius: 1px; border: 1px solid #111; background: #f0f0f0; color: #111; text-transform: uppercase; margin-top: 10px;">Delete</button>
-                </form>
+                <div>
+                    <form th:action="@{/events/interested/{id}(id=${event.id})}" method="post" style="display: inline;">
+                        <button type="submit" style="border: none; background: none; cursor: pointer;">
+                            <i th:class="${interestedEvents.contains(event)} ? 'fa-solid fa-star' : 'fa-regular fa-star'"
+                               style="color: #f9c70c; font-size: 18px;"></i>
+                        </button>
+                    </form>
+                    <form th:action="@{/events/delete/{id}(id=${event.id})}" method="post" style="display: inline;">
+                        <button type="submit" style="padding: 0px 10px; font-size: 12px; border-radius: 1px; border: 1px solid #111; background: #f0f0f0; color: #111; text-transform: uppercase; margin-top: 10px;">Delete</button>
+                    </form>
+                </div>
             </li>
         </th:block>
     </ul>

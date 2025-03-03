@@ -18,7 +18,7 @@ public interface EventService {
     void deleteById(Long id);
     List<Event> searchEvents(String name, String location);
     List<Event> filterEventsByDate(LocalDate date);
-    Event interested(Long id);
+    Event interested(Long id, User user);
     List<Event> getInterestedEvents(Long userId);
   
 }

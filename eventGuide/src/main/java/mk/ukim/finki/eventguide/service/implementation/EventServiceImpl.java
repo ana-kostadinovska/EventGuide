@@ -83,11 +83,13 @@ public class EventServiceImpl implements EventService {
     public List<Event> filterEventsByDate(LocalDate date) {
         return this.eventRepository.findByDate(date);
     }
-    
-    @Override   
-    public Event interested(Long id) {
+
+    @Override
+    public Event interested(Long id, User user) {
         Event event=findById(id).get();
         event.setInterested(event.getInterested()+1);
+        Set<User> users = event.getInterestedUsers();
+        users.add(user);
         return eventRepository.save(event);
     }
     @Override

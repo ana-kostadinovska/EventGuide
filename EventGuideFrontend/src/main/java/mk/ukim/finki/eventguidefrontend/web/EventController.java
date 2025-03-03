@@ -29,8 +29,10 @@ public class EventController {
 
     @GetMapping
     public String getEvents(Model model, Authentication authentication) {
-        String response = apiService.fetchData("/events", authentication);
-        model.addAttribute("events", apiService.parseJsonList(response));
+        String responseAllEvents = apiService.fetchData("/events", authentication);
+        String responseUserEvents = apiService.fetchData("/events/userInterestedEvents", authentication);
+        model.addAttribute("events", apiService.parseJsonList(responseAllEvents));
+        model.addAttribute("interestedEvents", apiService.parseJsonList(responseUserEvents));
         return "events";
     }
     @GetMapping("/{id}")
@@ -129,5 +131,15 @@ public class EventController {
         return "redirect:/locals/"+local_id;
     }
 
+    @PostMapping("/interested/{id}")
+    public String toggleEvent(@PathVariable Long id, Authentication authentication) {
+        String response = apiService.postData("/events/interested/" + id,"", authentication);
+
+        if (response.startsWith("redirect:")) {
+            return response;
+        }
+
+        return "redirect:/events";
+    }
 }
 

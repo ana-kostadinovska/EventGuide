@@ -43,8 +43,12 @@ public class EventRestController {
 
     // Updated interested endpoint
     @PostMapping("/interested/{id}")
-    public ResponseEntity<Map<String, Integer>> toggleInterested(@PathVariable Long id) {
-        Event updatedEvent = eventService.interested(id);  // Get the updated event after incrementing interested count
+    public ResponseEntity<Map<String, Integer>> toggleInterested(@PathVariable Long id, Authentication authentication) {
+        Optional<User> userOptional = userService.getLoggedInUser(authentication);
+
+        User user = userOptional.get();
+
+        Event updatedEvent = eventService.interested(id,user);  // Get the updated event after incrementing interested count
         Map<String, Integer> response = Map.of("interestedCount", updatedEvent.getInterested());
         return ResponseEntity.ok(response);  // Return just the updated count in the response
     }
@@ -92,8 +96,11 @@ public class EventRestController {
         return this.eventService.filterEventsByDate(date);
     }
 
-    @GetMapping("/interested/{userId}")
-    public ResponseEntity<List<Event>> getInterestedEvents(@PathVariable Long userId) {
-        return ResponseEntity.ok(eventService.getInterestedEvents(userId));
+    @GetMapping("/userInterestedEvents")
+    public ResponseEntity<List<Event>> getInterestedEvents(Authentication authentication) {
+        Optional<User> userOptional = userService.getLoggedInUser(authentication);
+
+        User user = userOptional.get();
+        return ResponseEntity.ok(eventService.getInterestedEvents(user.getId()));
     }
 }
