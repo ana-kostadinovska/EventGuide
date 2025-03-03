@@ -40,7 +40,7 @@ public class LocalRestController {
     public ResponseEntity<Local> save(
             @RequestBody LocalUpdateRequest request
     ) {
-        return this.localService.save(request.getName(), request.getLocation(), request.getWorkingHours(), request.getWorkingHours(), request.getType(), null)
+        return this.localService.save(request.getName(), request.getLocation(), request.getWorkingHours(), request.getWorkingHours(),request.getWebsite(), request.getType(), null)
                 .map(local -> ResponseEntity.ok().body(local))
                 .orElseGet(() -> ResponseEntity.badRequest().build());
     }

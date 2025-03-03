@@ -22,6 +22,8 @@ public class Local {
 
     private String contact_number;
 
+    private String website;
+
     @Enumerated(EnumType.STRING)
     private LocalType type;
 
@@ -32,11 +34,12 @@ public class Local {
     public Local() {
     }
 
-    public Local(String name, String location, String workingHours, String contact_number, LocalType type, List<Event> events) {
+    public Local(String name, String location, String workingHours, String contact_number, String website, LocalType type, List<Event> events) {
         this.name = name;
         this.location = location;
         this.workingHours = workingHours;
         this.contact_number = contact_number;
+        this.website = website;
         this.type = type;
         this.events = events;
     }

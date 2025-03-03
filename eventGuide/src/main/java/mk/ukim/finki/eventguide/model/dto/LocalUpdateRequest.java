@@ -11,5 +11,6 @@ public class LocalUpdateRequest {
     private String location;
     private String workingHours;
     private String contactNumber;
+    private String website;
     private LocalType type;
 }

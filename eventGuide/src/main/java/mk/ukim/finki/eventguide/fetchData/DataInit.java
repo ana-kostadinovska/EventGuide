@@ -45,7 +45,7 @@ public class DataInit {
                 localType = LocalType.BAR;
             }
 
-            localRepository.save(new Local(dto.Name, dto.Address, dto.OpeningHours.get(0), dto.PhoneNumber, localType, null));
+            localRepository.save(new Local(dto.Name, dto.Address, dto.OpeningHours.get(0), dto.PhoneNumber, dto.LocalWebsite, localType, null));
         }
     }
 }

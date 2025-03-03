@@ -7,7 +7,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,8 +30,8 @@ public class LocalServiceImpl implements LocalService {
     }
 
     @Override
-    public Optional<Local> save(String name, String location, String workingHours, String contact_number, LocalType type, List<Event> events) {
-        Local local = new Local(name, location, workingHours, contact_number, type, events);
+    public Optional<Local> save(String name, String location, String workingHours, String contact_number, String website, LocalType type, List<Event> events) {
+        Local local = new Local(name, location, workingHours, contact_number, website, type, events);
         return Optional.of(this.localRepository.save(local));
     }
 

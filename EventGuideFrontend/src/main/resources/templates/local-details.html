@@ -41,6 +41,10 @@
         <strong style="color: #222; font-weight: 600;">Contact Number:</strong>
         <span th:text="${local.contact_number}"></span>
     </p>
+    <p class="local-info" style="font-size: 17px; margin-bottom: 12px; line-height: 1.5; color: #444;">
+        <strong style="color: #222; font-weight: 600;">Website:</strong>
+        <span th:text="${local.website}"></span>
+    </p>
 </div>
 
 <!-- Events Section -->
@@ -92,15 +96,23 @@
         </p>
 
         <form th:action="@{/events/edit/{id1}(id1=${event.id})}" method="get">
-            <button type="submit" style="padding: 5px 10px; font-size: 11px; border-radius: 1px; background: #222; color: white; text-transform: uppercase;">Edit event</button>
+            <button type="submit"
+                    style="padding: 5px 10px; font-size: 11px; border-radius: 1px; background: #222; color: white; text-transform: uppercase;">
+                Edit event
+            </button>
         </form>
     </li>
 </ul>
 
 <form th:action="@{/locals/{id}/events/add(id=${local.id})}" method="get">
-    <button type="submit" style="padding: 10px 20px; font-size: 14px; max-width: 150px; border-radius: 1px; background: #222; color: white; text-transform: uppercase; margin-left: 30px; margin-top: 20px">Add event</button>
+    <button type="submit"
+            style="padding: 10px 20px; font-size: 14px; max-width: 150px; border-radius: 1px; background: #222; color: white; text-transform: uppercase; margin-left: 30px; margin-top: 20px">
+        Add event
+    </button>
 </form>
 
-<a href="/locals" style="padding: 10px 20px; border-radius: 1px; background: #f0f0f0; color: black; border: 3px solid #111111; text-transform: uppercase; margin-left: 30px; margin-top: 20px; display: block; max-width: 150px; text-align: center; text-decoration: none; font-size: 14px; margin-bottom: 20px">Back to List</a>
+<a href="/locals"
+   style="padding: 10px 20px; border-radius: 1px; background: #f0f0f0; color: black; border: 3px solid #111111; text-transform: uppercase; margin-left: 30px; margin-top: 20px; display: block; max-width: 150px; text-align: center; text-decoration: none; font-size: 14px; margin-bottom: 20px">Back
+    to List</a>
 </body>
 </html>
