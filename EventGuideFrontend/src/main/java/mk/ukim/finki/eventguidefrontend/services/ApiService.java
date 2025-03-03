@@ -29,15 +29,16 @@ public class ApiService {
 
     public String fetchData(String endpoint, Authentication authentication) {
         String accessToken = getAccessToken(authentication);
-        if (accessToken == null) {
-            return "redirect:/login";
-        }
 
         try {
-            return webClient.get()
-                    .uri(endpoint)
-                    .header(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken)
-                    .retrieve()
+            WebClient.RequestHeadersSpec<?> request = webClient.get()
+                    .uri(endpoint);
+
+            if (accessToken != null && !accessToken.isEmpty()) {
+                request.header(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken);
+            }
+
+            return request.retrieve()
                     .bodyToMono(String.class)
                     .block();
         } catch (WebClientResponseException ex) {
@@ -47,15 +48,16 @@ public class ApiService {
 
     public String postData(String endpoint, Object requestBody, Authentication authentication) {
         String accessToken = getAccessToken(authentication);
-        if (accessToken == null) {
-            return "redirect:/login";
-        }
 
         try {
-            return webClient.post()
-                    .uri(endpoint)
-                    .header(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken)
-                    .bodyValue(requestBody)
+            WebClient.RequestBodySpec request = webClient.post()
+                    .uri(endpoint);
+
+            if (accessToken != null && !accessToken.isEmpty()) {
+                request.header(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken);
+            }
+
+            return request.bodyValue(requestBody)
                     .retrieve()
                     .bodyToMono(String.class)
                     .block();
@@ -63,37 +65,41 @@ public class ApiService {
             return handleException(ex);
         }
     }
+
 
 
     public String deleteData(String endpoint, Authentication authentication) {
         String accessToken = getAccessToken(authentication);
-        if (accessToken == null) {
-            return "redirect:/login";
-        }
 
         try {
-            return webClient.delete()
-                    .uri(endpoint)
-                    .header(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken)
-                    .retrieve()
+            WebClient.RequestHeadersSpec<?> request = webClient.delete()
+                    .uri(endpoint);
+
+            if (accessToken != null && !accessToken.isEmpty()) {
+                request.header(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken);
+            }
+
+            return request.retrieve()
                     .bodyToMono(String.class)
                     .block();
         } catch (WebClientResponseException ex) {
             return handleException(ex);
         }
     }
+
 
     public String updateData(String endpoint, Object requestBody, Authentication authentication) {
         String accessToken = getAccessToken(authentication);
-        if (accessToken == null) {
-            return "redirect:/login";
-        }
 
         try {
-            return webClient.put()
-                    .uri(endpoint)
-                    .header(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken)
-                    .bodyValue(requestBody)
+            WebClient.RequestBodySpec request = webClient.put()
+                    .uri(endpoint);
+
+            if (accessToken != null && !accessToken.isEmpty()) {
+                request.header(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken);
+            }
+
+            return request.bodyValue(requestBody)
                     .retrieve()
                     .bodyToMono(String.class)
                     .block();
@@ -101,6 +107,7 @@ public class ApiService {
             return handleException(ex);
         }
     }
+
 
     private String getAccessToken(Authentication authentication) {
         if (authentication instanceof OAuth2AuthenticationToken oauthToken) {

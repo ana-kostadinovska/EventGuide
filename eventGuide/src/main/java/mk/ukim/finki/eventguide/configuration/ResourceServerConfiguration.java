@@ -29,7 +29,7 @@ public class ResourceServerConfiguration {
                         .jwt(jwt -> jwt.decoder(jwtDecoder())
                                 .jwtAuthenticationConverter(jwtAuthenticationConverter())))
                 .authorizeHttpRequests(authz -> authz
-                        .requestMatchers("/public/**").permitAll()
+                        .requestMatchers("api/locals", "api/events", "api/locals/{id}", "api/events/{id}").permitAll()
                         .anyRequest().authenticated())
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()));
 

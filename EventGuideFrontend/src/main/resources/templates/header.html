@@ -4,8 +4,14 @@
     <ul>
       <li><a href="/locals">Locals</a></li>
       <li><a href="/events">Events</a></li>
-      <li><a href="#">Register</a></li>
-      <li><a href="#">Profile</a></li>
+
+      <li sec:authorize="!isAuthenticated()"><a href="/auth/login">Login</a></li>
+
+      <li sec:authorize="isAuthenticated()">
+        <a href="/logout">Logout</a>
+      </li>
+
+      <li sec:authorize="isAuthenticated()"><a href="#">Profile</a></li>
     </ul>
   </nav>
 </header>

@@ -31,7 +31,7 @@ public class LocalController {
 
         endpoint += endpoint.contains("?") ? "&page=" + pageNumber : "?page=" + pageNumber;
         String response = apiService.fetchData(endpoint, authentication);
-
+        System.out.println(response);
         model.addAttribute("locals", apiService.parseJsonList(response));
         model.addAttribute("currentPage", pageNumber);
         model.addAttribute("totalPages", 4);
