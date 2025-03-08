@@ -2,13 +2,13 @@ package mk.ukim.finki.eventguide.service.implementation;
 
 import mk.ukim.finki.eventguide.model.Event;
 import mk.ukim.finki.eventguide.model.Local;
-import mk.ukim.finki.eventguide.model.LocalType;
 import mk.ukim.finki.eventguide.model.User;
 import mk.ukim.finki.eventguide.repository.EventRepository;
 import mk.ukim.finki.eventguide.repository.LocalRepository;
 import mk.ukim.finki.eventguide.repository.UserRepository;
 import mk.ukim.finki.eventguide.service.EventService;
 import org.springframework.stereotype.Service;
+import jakarta.transaction.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -37,7 +37,7 @@ public class EventServiceImpl implements EventService {
 
     @Override
     public Optional<Event> save(String name, String artist, String description, LocalDate date, LocalTime time, Long local_id, User user) {
-        Local local=this.localRepository.findById(local_id).get();
+        Local local = this.localRepository.findById(local_id).get();
         Event event = new Event(name, artist, description, date, time, local, user);
         return Optional.of(this.eventRepository.save(event));
     }
@@ -50,13 +50,21 @@ public class EventServiceImpl implements EventService {
         event.setDescription(description);
         event.setDate(date);
         event.setTime(time);
-        Local local=this.localRepository.findById(local_id).get();
+        Local local = this.localRepository.findById(local_id).get();
         event.setLocal(local);
         return Optional.of(this.eventRepository.save(event));
     }
 
     @Override
+    @Transactional
     public void deleteById(Long id) {
+        Event event = this.eventRepository.findById(id).get();
+
+        Set<User> interestedUsers = event.getInterestedUsers();
+        for (User user : interestedUsers) {
+            user.getInterest().remove(event);
+        }
+
         this.eventRepository.deleteById(id);
     }
 
@@ -86,10 +94,11 @@ public class EventServiceImpl implements EventService {
 
     @Override
     public Event interested(Long id, User user) {
-        Event event=findById(id).get();
-        event.setInterested(event.getInterested()+1);
+        Event event = findById(id).get();
+        event.setInterested(event.getInterested() + 1);
         return eventRepository.save(event);
     }
+
     @Override
     public List<Event> getInterestedEvents(Long userId) {
         return eventRepository.findByInterestedUsers_Id(userId);

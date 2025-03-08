@@ -1,17 +1,21 @@
 <header th:fragment="header">
-  <div  class="logo">EVENT GUIDE</div>
-  <nav>
-    <ul>
-      <li><a href="/locals">Locals</a></li>
-      <li><a href="/events">Events</a></li>
+    <a href="/locals">
+        <button class="logo">
+            EVENT GUIDE
+        </button>
+    </a>
+    <nav>
+        <ul>
+            <li><a href="/locals">Locals</a></li>
+            <li><a href="/events">Events</a></li>
 
-      <li sec:authorize="!isAuthenticated()"><a href="/auth/login">Login</a></li>
+            <li sec:authorize="!isAuthenticated()"><a href="/auth/login">Login</a></li>
 
-      <li sec:authorize="isAuthenticated()">
-        <a href="/logout">Logout</a>
-      </li>
+            <li sec:authorize="isAuthenticated()">
+                <a href="/logout">Logout</a>
+            </li>
 
-      <li sec:authorize="isAuthenticated()"><a href="#">Profile</a></li>
-    </ul>
-  </nav>
+            <li sec:authorize="isAuthenticated()"><a href="#">Profile</a></li>
+        </ul>
+    </nav>
 </header>
