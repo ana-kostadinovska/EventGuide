@@ -33,7 +33,9 @@ public class EventController {
         String responseUserEvents = apiService.fetchData("/events/userInterestedEvents", authentication);
         model.addAttribute("events", apiService.parseJsonList(responseAllEvents));
         model.addAttribute("interestedEvents", apiService.parseJsonList(responseUserEvents));
-        return "events";
+        model.addAttribute("pageTitle", "Events");
+        model.addAttribute("bodyContent", "events");
+        return "template";
     }
     @GetMapping("/{id}")
     public String getEventDetails(@PathVariable Long id, Model model, Authentication authentication) {
@@ -44,7 +46,9 @@ public class EventController {
         }
 
         model.addAttribute("event", apiService.parseJsonMap(response));
-        return "event-details";
+        model.addAttribute("pageTitle", "Events");
+        model.addAttribute("bodyContent", "event-details");
+        return "template";
     }
 
     @PostMapping("/add")
@@ -101,7 +105,9 @@ public class EventController {
 
         model.addAttribute("event", event);
 
-        return "edit-event";
+        model.addAttribute("pageTitle", "Edit event");
+        model.addAttribute("bodyContent", "edit-event");
+        return "template";
     }
 
     @PostMapping("/edit/{id}")

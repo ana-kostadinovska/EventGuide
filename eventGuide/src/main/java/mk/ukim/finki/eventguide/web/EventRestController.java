@@ -41,7 +41,6 @@ public class EventRestController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    // Updated interested endpoint
     @PostMapping("/interested/{id}")
     public ResponseEntity<Map<String, Integer>> toggleInterested(@PathVariable Long id, Authentication authentication) {
         Optional<User> userOptional = userService.getLoggedInUser(authentication);

@@ -1,68 +1,58 @@
-<div xmlns:th="http://www.thymeleaf.org">
-
-    <!-- Info Section -->
-    <section class="hero" style="background: url('img.png') no-repeat center center/cover;
-            color: black;
-            text-align: center;
-            padding: 80px 20px;
-    ">
+<div th:fragment="bodyContent">
+    <!-- Hero Section -->
+    <section class="hero">
         <h1>EVENT GUIDE</h1>
-        <p><em>A wonderful serenity has taken possession of my entire soul, like these sweet mornings of spring<br/>which
-            I enjoy with my whole heart.</em></p>
+        <p>
+            <em>A wonderful serenity has taken possession of my entire soul, like these sweet mornings of spring<br/>
+                which I enjoy with my whole heart.</em>
+        </p>
     </section>
 
-    <!-- Locals Grid -->
-    <form action="/locals" method="get"
-          style="max-width: 380px; margin: 10px 20px -20px 50px; padding: 10px; background: #ffffff; border-radius: 1px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12); transition: box-shadow 0.3s ease-in-out; text-align: left; display: flex; align-items: center; gap: 10px;">
-        <label for="type" style="font-size: 14px; color: #444; font-weight: 600;">Filter by type:</label>
-        <select id="type" name="type"
-                style="font-size: 14px; padding: 6px; color: #444; border: 1px solid #ddd; border-radius: 1px;">
-            <option value="" style="color: #444;">All</option>
-            <option value="RESTAURANT" th:selected="${param.type == 'RESTAURANT'}" style="color: #444;">Restaurant
-            </option>
-            <option value="CAFE" th:selected="${param.type == 'CAFE'}" style="color: #444;">Café</option>
-            <option value="BAR" th:selected="${param.type == 'BAR'}" style="color: #444;">Bar</option>
-            <option value="NIGHT_CLUB" th:selected="${param.type == 'NIGHT_CLUB'}" style="color: #444;">Night club
-            </option>
-            <option value="PUB" th:selected="${param.type == 'PUB'}" style="color: #444;">Pub</option>
+    <!-- Filter Section -->
+    <form action="/locals" method="get" class="filter-form">
+        <label for="type">Filter by type:</label>
+        <select id="type" name="type">
+            <option value="">All</option>
+            <option value="RESTAURANT" th:selected="${param.type == 'RESTAURANT'}">Restaurant</option>
+            <option value="CAFE" th:selected="${param.type == 'CAFE'}">Café</option>
+            <option value="BAR" th:selected="${param.type == 'BAR'}">Bar</option>
+            <option value="NIGHT_CLUB" th:selected="${param.type == 'NIGHT_CLUB'}">Night club</option>
+            <option value="PUB" th:selected="${param.type == 'PUB'}">Pub</option>
         </select>
-        <button type="submit"
-                style="font-size: 14px; padding: 6px 12px; background-color: #222; color: white; border: none; border-radius: 1px; cursor: pointer; transition: background-color 0.3s ease-in-out;">
-            Apply Filter
-        </button>
+        <button type="submit">Apply Filter</button>
     </form>
 
+    <!-- Locals Grid -->
     <section class="blog-grid">
         <div class="blog-post" th:each="local : ${locals}">
             <img src="thumbnail.jpg" alt="img">
             <h3 th:text="${local.name}"></h3>
-<!--            TODO-->
-<!--            <p class="author">BY <strong>MARK STONE</strong> | <span th:text="${local.type}"></span> | X COMMENTS</p>-->
             <span th:text="${local.type}"></span>
             <br/>
-<!--            <p class="excerpt">INFO</p>-->
             <a th:href="@{/locals/{id}(id=${local.id})}">Read more »</a>
         </div>
     </section>
 
-    <div style="text-align: center; margin-top: 20px; margin-bottom: 20px; font-size: 18px;">
+    <!-- Pagination -->
+    <div class="pagination">
         <a th:if="${currentPage > 0}"
            th:href="@{/locals(page=${currentPage - 1}, type=${type})}"
-           style="color: #1f1d1d; text-decoration: none; font-weight: bold; margin-right: 15px;">
+           class="page-link">
             &laquo; Previous
         </a>
 
         <span th:each="pageNum : ${#numbers.sequence(0, totalPages - 1)}">
-        <a th:href="@{/locals(page=${pageNum}, type=${type})}"
-           th:text="${pageNum + 1}"
-           th:style="${pageNum == currentPage} ? 'color: white; background: #1f1d1d; padding: 5px 10px; border-radius: 1px; text-decoration: none; font-weight: bold;' : 'color: #1f1d1d; text-decoration: none; margin: 0 5px; font-weight: bold;'">
-        </a>
+      <a th:href="@{/locals(page=${pageNum}, type=${type})}"
+         th:text="${pageNum + 1}"
+         th:classappend="${pageNum == currentPage} ? 'active' : ''"
+         class="page-link">
+      </a>
     </span>
-
         <a th:if="${currentPage + 1 < totalPages}"
            th:href="@{/locals(page=${currentPage + 1}, type=${type})}"
-           style="color: #1f1d1d; text-decoration: none; font-weight: bold; margin-left: 15px;">
+           class="page-link">
             Next &raquo;
         </a>
     </div>
+
 </div>

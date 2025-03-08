@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.oauth2.client.*;
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
@@ -16,6 +17,7 @@ import org.springframework.security.web.authentication.LoginUrlAuthenticationEnt
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration {
+
 
     @Autowired
     private CustomAuthenticationSuccessHandler successHandler;
@@ -31,10 +33,11 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         CognitoLogoutHandler cognitoLogoutHandler = new CognitoLogoutHandler();
+
         cognitoLogoutHandler.setDefaultTargetUrl("/locals");
         http.csrf(Customizer.withDefaults())
                 .authorizeHttpRequests(authz -> authz
-                        .requestMatchers("/", "/locals", "/events", "/locals/{id}", "/events/{id}").permitAll()
+                        .requestMatchers("/", "/locals", "/events", "/locals/{id}", "/events/{id}", "/css/**", "/js/**", "/images/**").permitAll()
                         .anyRequest()
                         .authenticated())
                 .oauth2Login(oauth2->oauth2.successHandler(successHandler))
