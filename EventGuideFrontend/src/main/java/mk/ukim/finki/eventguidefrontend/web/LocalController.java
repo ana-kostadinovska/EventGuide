@@ -31,13 +31,13 @@ public class LocalController {
 
         endpoint += endpoint.contains("?") ? "&page=" + pageNumber : "?page=" + pageNumber;
         String response = apiService.fetchData(endpoint, authentication);
-        System.out.println(response);
         model.addAttribute("locals", apiService.parseJsonList(response));
         model.addAttribute("currentPage", pageNumber);
         model.addAttribute("totalPages", 4);
         model.addAttribute("type", type != null ? type : "");
-        model.addAttribute("bodyContent", "home");
 
+        model.addAttribute("pageTitle", "Home");
+        model.addAttribute("bodyContent", "home");
         return "template";
     }
 
@@ -50,8 +50,8 @@ public class LocalController {
         }
 
         model.addAttribute("local", apiService.parseJsonMap(response));
+        model.addAttribute("pageTitle", "Local details");
         model.addAttribute("bodyContent", "local-details");
-
         return "template";
     }
 
@@ -105,9 +105,12 @@ public class LocalController {
     }
 
     @GetMapping("/add")
-    public String showAddForm() {
-        return "add-local";
+    public String showAddForm(Model model) {
+        model.addAttribute("pageTitle", "Add local");
+        model.addAttribute("bodyContent", "add-local");
+        return "template";
     }
+
 
     @PostMapping("/add")
     public String addLocal(
@@ -147,6 +150,8 @@ public class LocalController {
     @GetMapping("{id}/events/add")
     public String showAddEventForm(@PathVariable Long id, Model model, Authentication authentication) {
         model.addAttribute("localId", id);
-        return "add-event";
+        model.addAttribute("pageTitle", "Add event");
+        model.addAttribute("bodyContent", "add-event");
+        return "template";
     }
 }

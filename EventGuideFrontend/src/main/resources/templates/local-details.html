@@ -1,118 +1,79 @@
-<!-- Local Info -->
-<div class="local-info-container" style="
-    background: #ffffff;
-    max-width: 650px;
-    margin: 30px auto;
-    padding: 25px;
-    text-align: left;
-    border-radius: 1px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
-    transition: box-shadow 0.3s ease-in-out;">
+<div class="local-info-container">
 
-    <p class="local-info" style="font-size: 24px; margin-bottom: 12px; line-height: 1.5; color: #222;">
-        <strong th:text="${local.name}" style="color: #222; font-weight: 1000;"></strong>
+    <p class="local-info title">
+        <strong th:text="${local.name}"></strong>
     </p>
 
-    <p class="local-info" style="font-size: 17px; margin-bottom: 12px; line-height: 1.5; color: #444;">
-        <strong style="color: #222; font-weight: 600;">Type:</strong>
+    <p class="local-info">
+        <strong>Type:</strong>
         <span th:text="${local.type}"></span>
     </p>
-    <p class="local-info" style="font-size: 17px; margin-bottom: 12px; line-height: 1.5; color: #444;">
-        <strong style="color: #222; font-weight: 600;">Location:</strong>
+
+    <p class="local-info">
+        <strong>Location:</strong>
         <span th:text="${local.location}"></span>
     </p>
-    <p class="local-info" style="font-size: 17px; margin-bottom: 12px; line-height: 1.5; color: #444;">
-        <strong style="color: #222; font-weight: 600;">Working Hours:</strong>
-    <table style="width: 100%; border-collapse: collapse; margin-top: 10px;">
+
+    <p class="local-info">
+        <strong>Working Hours:</strong>
+    </p>
+
+    <table class="working-hours-table">
         <tr th:each="hour : ${#strings.arraySplit(#strings.replace(#strings.replace(local.workingHours, '[', ''), ']', ''), ',')}">
-            <td style="font-size: 15px; color: #555; padding: 8px; border-bottom: 1px solid #ddd; font-weight: 600;">
+            <td>
                 <span th:text="${#strings.trim(#strings.substringBefore(hour, ':'))}"></span>
             </td>
-            <td style="font-size: 15px; color: #555; padding: 8px; border-bottom: 1px solid #ddd;">
+            <td>
                 <span th:text="${#strings.trim(#strings.substringAfter(hour, ':'))}"></span>
             </td>
         </tr>
     </table>
-    </p>
-    <br/>
-    <p th:if="${local.contact_number != null or local.contact_number != 'N/A'}"
-       class="local-info"
-       style="font-size: 17px; margin-bottom: 12px; line-height: 1.5; color: #444;">
-        <strong style="color: #222; font-weight: 600;">Contact Number:</strong>
+
+    <p th:if="${local.contact_number != null and local.contact_number != 'N/A'}" class="local-info">
+        <strong>Contact Number:</strong>
         <span th:text="${local.contact_number}"></span>
     </p>
-    <p class="local-info" style="font-size: 17px; margin-bottom: 12px; line-height: 1.5; color: #444;">
-        <strong style="color: #222; font-weight: 600;">Website:</strong>
+
+    <p class="local-info">
+        <strong>Website:</strong>
         <span th:text="${local.website}"></span>
     </p>
 </div>
 
 <!-- Events Section -->
-<h2 class="section-title" style="
-    font-size: 26px;
-    color: #111;
-    margin-top: 50px;
-    margin-bottom: 15px;
-    text-align: center;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 1px;">
-    Events
-</h2>
+<h2 class="section-title">Events</h2>
 
-<ul class="events-list" style="list-style: none; padding: 0; margin: 0 auto 50px auto;
-                                text-align: left;
-                                border-radius: 1px;
-                                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
-                                max-width: 650px">
+<ul class="events-list">
+    <li class="event-item" th:each="event : ${local.events}">
+        <h3 class="event-title" th:text="${event.name}"></h3>
 
-    <li class="event-item" th:each="event : ${local.events}" style="
-        background: #fff;
-        margin-bottom: 22px;
-        padding: 22px;
-        text-align: left;
-        border-radius: 1px;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-        transition: transform 0.2s ease-in-out, box-shadow 0.3s ease-in-out;">
-
-        <h3 class="event-title" th:text="${event.name}"
-            style="font-size: 22px; margin-bottom: 12px; color: #222; font-weight: 700;"></h3>
-
-        <p class="event-detail" style="font-size: 15px; margin: 8px 0; color: #555; line-height: 1.6;">
-            <strong style="color: #111; font-weight: 600;">Artist:</strong>
+        <p class="event-detail">
+            <strong>Artist:</strong>
             <span th:text="${event.artist}"></span>
         </p>
-        <p class="event-detail" style="font-size: 15px; margin: 8px 0; color: #555; line-height: 1.6;">
-            <strong style="color: #111; font-weight: 600;">Description:</strong>
+        <p class="event-detail">
+            <strong>Description:</strong>
             <span th:text="${event.description}"></span>
         </p>
-        <p class="event-detail" style="font-size: 15px; margin: 8px 0; color: #555; line-height: 1.6;">
-            <strong style="color: #111; font-weight: 600;">Date:</strong>
+        <p class="event-detail">
+            <strong>Date:</strong>
             <span th:text="${event.date}"></span>
         </p>
-        <p class="event-detail" style="font-size: 15px; margin: 8px 0; color: #555; line-height: 1.6;">
-            <strong style="color: #111; font-weight: 600;">Time:</strong>
+        <p class="event-detail">
+            <strong>Time:</strong>
             <span th:text="${event.time}"></span>
         </p>
 
-        <form th:action="@{/events/edit/{id1}(id1=${event.id})}" method="get">
-            <button type="submit"
-                    style="padding: 5px 10px; font-size: 11px; border-radius: 1px; background: #222; color: white; text-transform: uppercase;">
-                Edit event
-            </button>
+        <form th:action="@{/events/edit/{id}(id=${event.id})}" method="get">
+            <button type="submit" class="btn">Edit event</button>
         </form>
     </li>
 </ul>
 
-<form th:action="@{/locals/{id}/events/add(id=${local.id})}" method="get">
-    <button type="submit"
-            style="padding: 10px 20px; font-size: 14px; max-width: 150px; border-radius: 1px; background: #222; color: white; text-transform: uppercase; margin-left: 30px; margin-top: 20px">
-        Add event
-    </button>
-</form>
+<div class="actions">
+    <form th:action="@{/locals/{id}/events/add(id=${local.id})}" method="get">
+        <button type="submit" class="btn">Add event</button>
+    </form>
 
-<a href="/locals"
-   style="padding: 10px 20px; border-radius: 1px; background: #f0f0f0; color: black; border: 3px solid #111111; text-transform: uppercase; margin-left: 30px; margin-top: 20px; display: block; max-width: 150px; text-align: center; text-decoration: none; font-size: 14px; margin-bottom: 20px">Back
-    to List</a>
-</body>
-</html>
+    <a href="/locals" class="btn back-btn">Back to List</a>
+</div>

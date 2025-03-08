@@ -35,7 +35,7 @@ public class Event {
     @JsonIgnoreProperties("events")
     private Local local;
 
-    @ManyToMany(mappedBy = "interest")  // Reference to User's interest field
+    @ManyToMany(mappedBy = "interest")
     @JsonBackReference
     private Set<User> interestedUsers = new HashSet<>();
 
