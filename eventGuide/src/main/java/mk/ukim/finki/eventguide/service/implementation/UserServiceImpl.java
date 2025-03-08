@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -50,6 +51,7 @@ public class UserServiceImpl implements UserService {
         user.setEmail(email);
         return Optional.of(this.userRepository.save(user));
     }
+
     @Override
     public void deleteById(Long id) {
         this.userRepository.deleteById(id);
@@ -65,10 +67,22 @@ public class UserServiceImpl implements UserService {
             User user = userOptional.get();
             Event event = eventOptional.get();
 
-            user.getInterest().add(event);
-            event.getInterestedUsers().add(user);
+            Set<Event> userInterestedEvents = user.getInterest();
+            Set<User> eventInterestedUsers = event.getInterestedUsers();
 
-            event.setInterested(event.getInterestedUsers().size()); // Update interest count
+            if (userInterestedEvents.contains(event)) {
+                userInterestedEvents.remove(event);
+            } else {
+                userInterestedEvents.add(event);
+            }
+
+            if (eventInterestedUsers.contains(user)) {
+                eventInterestedUsers.remove(user);
+            } else {
+                eventInterestedUsers.add(user);
+            }
+
+            event.setInterested(eventInterestedUsers.size());
 
             return Optional.of(userRepository.save(user));
         }

@@ -5,13 +5,11 @@ import mk.ukim.finki.eventguide.model.User;
 import mk.ukim.finki.eventguide.model.dto.EventAddRequest;
 import mk.ukim.finki.eventguide.service.EventService;
 import mk.ukim.finki.eventguide.service.UserService;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -47,10 +45,10 @@ public class EventRestController {
 
         User user = userOptional.get();
 
-        Event updatedEvent = eventService.interested(id,user);  // Get the updated event after incrementing interested count
+        Event updatedEvent = eventService.interested(id,user);
         userService.addInterest(user.getId(), id);
         Map<String, Integer> response = Map.of("interestedCount", updatedEvent.getInterested());
-        return ResponseEntity.ok(response);  // Return just the updated count in the response
+        return ResponseEntity.ok(response);
     }
 
 
