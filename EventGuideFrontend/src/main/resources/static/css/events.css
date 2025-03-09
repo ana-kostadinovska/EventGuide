@@ -1,0 +1,107 @@
+/* Events List Container */
+.events-list {
+    list-style: none;
+    padding: 0;
+    margin: 20px auto;
+    max-width: 750px;
+}
+
+/* Event Item */
+.event-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #fff;
+    margin-bottom: 20px;
+    padding: 20px;
+    text-align: left;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.event-item:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+/* Event Information */
+.event-info {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    flex: 1;
+}
+
+.event-title {
+    font-size: 18px;
+    font-weight: bold;
+    text-decoration: none;
+    color: #222;
+    transition: color 0.3s;
+}
+
+.event-title:hover {
+    color: #007bff;
+}
+
+.event-artist,
+.event-date,
+.event-time {
+    font-size: 14px;
+    color: #555;
+}
+
+/* Event Actions */
+.event-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+/* Star Button */
+.star-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    padding: 5px;
+    transition: transform 0.2s ease-in-out;
+}
+
+.star-btn i {
+    color: #f9c70c; /* Gold color */
+}
+
+.star-btn:hover {
+    transform: scale(1.1);
+}
+
+/* Delete Button */
+.btn-delete {
+    background: #dc3545;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out;
+    border: none;
+}
+
+.btn-delete:hover {
+    background: #c82333;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .event-item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .event-actions {
+        width: 100%;
+        justify-content: flex-end;
+    }
+}

@@ -34,6 +34,7 @@ public class EventController {
         model.addAttribute("events", apiService.parseJsonList(responseAllEvents));
         model.addAttribute("interestedEvents", apiService.parseJsonList(responseUserEvents));
         model.addAttribute("pageTitle", "Events");
+        model.addAttribute("cssFile", "events.css");
         model.addAttribute("bodyContent", "events");
         return "template";
     }
@@ -47,6 +48,8 @@ public class EventController {
 
         model.addAttribute("event", apiService.parseJsonMap(response));
         model.addAttribute("pageTitle", "Events");
+        model.addAttribute("cssFile", "event-details.css");
+
         model.addAttribute("bodyContent", "event-details");
         return "template";
     }
@@ -106,6 +109,7 @@ public class EventController {
         model.addAttribute("event", event);
 
         model.addAttribute("pageTitle", "Edit event");
+        model.addAttribute("cssFile", "add-event.css");
         model.addAttribute("bodyContent", "edit-event");
         return "template";
     }

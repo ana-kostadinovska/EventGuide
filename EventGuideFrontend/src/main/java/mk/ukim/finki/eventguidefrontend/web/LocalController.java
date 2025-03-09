@@ -37,6 +37,7 @@ public class LocalController {
         model.addAttribute("type", type != null ? type : "");
 
         model.addAttribute("pageTitle", "Home");
+        model.addAttribute("cssFile", "home.css");
         model.addAttribute("bodyContent", "home");
         return "template";
     }
@@ -51,6 +52,8 @@ public class LocalController {
 
         model.addAttribute("local", apiService.parseJsonMap(response));
         model.addAttribute("pageTitle", "Local details");
+        model.addAttribute("cssFile", "local-details.css");
+
         model.addAttribute("bodyContent", "local-details");
         return "template";
     }
@@ -73,8 +76,10 @@ public class LocalController {
 
         model.addAttribute("local", local);
         model.addAttribute("allEvents", allEvents);
-
-        return "edit-local";
+        model.addAttribute("pageTitle", "Edit local");
+        model.addAttribute("cssFile", "add-local.css");
+        model.addAttribute("bodyContent", "edit-local");
+        return "template";
     }
 
     @PostMapping("/edit/{id}")
@@ -107,6 +112,7 @@ public class LocalController {
     @GetMapping("/add")
     public String showAddForm(Model model) {
         model.addAttribute("pageTitle", "Add local");
+        model.addAttribute("cssFile", "add-local.css");
         model.addAttribute("bodyContent", "add-local");
         return "template";
     }
@@ -151,6 +157,7 @@ public class LocalController {
     public String showAddEventForm(@PathVariable Long id, Model model, Authentication authentication) {
         model.addAttribute("localId", id);
         model.addAttribute("pageTitle", "Add event");
+        model.addAttribute("cssFile", "add-event.css");
         model.addAttribute("bodyContent", "add-event");
         return "template";
     }

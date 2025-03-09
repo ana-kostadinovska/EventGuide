@@ -1,0 +1,89 @@
+/* Hero Section */
+.hero {
+    background: url('img.png') no-repeat center center/cover;
+    color: black;
+    text-align: center;
+    padding: 80px 20px;
+}
+
+.hero h1 {
+    font-size: 35px;
+    font-weight: 600;
+    text-shadow: 1px 1px 1px #fff;
+}
+
+.hero p {
+    font-size: 18px;
+    font-style: italic;
+    margin-top: 10px;
+    text-shadow: 1px 1px 1px #fff;
+}
+
+/* Blog Grid */
+.blog-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    padding: 50px;
+}
+
+.blog-post {
+    background: white;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: left;
+}
+
+.blog-post img {
+    width: 100%;
+    height: auto;
+}
+
+.blog-post h3 {
+    font-size: 18px;
+    margin-top: 10px;
+}
+
+.blog-post a {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.blog-post a:hover {
+    text-decoration: underline;
+}
+
+/* Pagination */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    padding: 10px;
+}
+
+.page-link {
+    padding: 8px 12px;
+    margin: 0 5px;
+    font-size: 14px;
+    text-decoration: none;
+    color: #222;
+    background: #f0f0f0;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    transition: background 0.3s ease-in-out, color 0.3s ease-in-out;
+}
+
+.page-link:hover {
+    background: #222;
+    color: white;
+}
+
+.page-link.active {
+    background: #222;
+    color: white;
+    font-weight: bold;
+    pointer-events: none;
+}
