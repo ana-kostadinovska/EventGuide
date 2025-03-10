@@ -20,15 +20,12 @@ public class Event {
     private Long id;
 
     private String name;
-
     private String artist;
-
     private String description;
-
     private LocalDate date;
-
     private LocalTime time;
     private Integer interested;
+    private String referenceUrl; // ✅ New field for event source URL
 
     @ManyToOne
     @JoinColumn(name = "local_id", nullable = false)
@@ -47,7 +44,7 @@ public class Event {
     public Event() {
     }
 
-    public Event(String name, String artist, String description, LocalDate date, LocalTime time, Local local, User user) {
+    public Event(String name, String artist, String description, LocalDate date, LocalTime time, String referenceUrl, Local local, User user) {
         this.name = name;
         this.artist = artist;
         this.description = description;
@@ -56,6 +53,7 @@ public class Event {
         this.local = local;
         this.user = user;
         this.interested = 0;
+        this.referenceUrl = referenceUrl;
     }
 
     @Override

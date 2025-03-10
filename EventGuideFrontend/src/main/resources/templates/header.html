@@ -9,13 +9,15 @@
             <li><a href="/locals">Locals</a></li>
             <li><a href="/events">Events</a></li>
 
+            <li sec:authorize="hasAuthority('ROLE_ADMIN')"><a href="/admin">Admin</a></li>
+
+            <li sec:authorize="isAuthenticated()"><a href="/profile">Profile</a></li>
+
             <li sec:authorize="!isAuthenticated()"><a href="/auth/login">Login</a></li>
 
             <li sec:authorize="isAuthenticated()">
                 <a href="/logout">Logout</a>
             </li>
-
-            <li sec:authorize="isAuthenticated()"><a href="#">Profile</a></li>
         </ul>
     </nav>
 </header>
