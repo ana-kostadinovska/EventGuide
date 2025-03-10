@@ -68,12 +68,14 @@ public class UserServiceImpl implements UserService {
 
             if (user.getInterest().contains(event)) {
                 user.getInterest().remove(event);
+                event.getInterestedUsers().remove(user);
             } else {
                 user.getInterest().add(event);
+                event.getInterestedUsers().add(user);
             }
 
             event.setInterested(event.getInterestedUsers().size());
-
+            eventRepository.save(event);
             return Optional.of(userRepository.save(user));
         }
         return Optional.empty();
@@ -161,17 +163,16 @@ public class UserServiceImpl implements UserService {
 
 
     public UserDTO getUserWithRoles(Authentication authentication) {
-        if (authentication == null) throw  new RuntimeException("User not authenticated");
+        if (authentication == null) throw new RuntimeException("User not authenticated");
         System.out.println("User sub " + authentication.getName());
         String sub = authentication.getName();
         var user = userRepository.findBySub(sub);
 
-        if(user.isPresent()){
+        if (user.isPresent()) {
             var roles = user.get().getRoles();
             var roleNames = roles.stream().map(Role::getName).toList();
             return new UserDTO(user.get().getId(), user.get().getSub(), user.get().getUsername(), user.get().getEmail(), roleNames);
-        }
-        else{
+        } else {
             throw new RuntimeException("User not found");
         }
     }

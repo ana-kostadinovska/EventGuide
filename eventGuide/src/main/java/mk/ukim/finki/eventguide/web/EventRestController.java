@@ -45,10 +45,15 @@ public class EventRestController {
 
         User user = userOptional.get();
 
-        Event updatedEvent = eventService.interested(id,user);
-        userService.addInterest(user.getId(), id);
-        Map<String, Integer> response = Map.of("interestedCount", updatedEvent.getInterested());
-        return ResponseEntity.ok(response);
+        var updatedUser = userService.addInterest(user.getId(), id);
+        if(updatedUser.isPresent()) {
+            Map<String, Integer> response = Map.of("interestedCount",2);
+
+            return ResponseEntity.ok(response);
+        }
+        else {
+            return ResponseEntity.badRequest().build();
+        }
     }
 
 

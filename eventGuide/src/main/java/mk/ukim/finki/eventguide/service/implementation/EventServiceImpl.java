@@ -96,7 +96,6 @@ public class EventServiceImpl implements EventService {
     @Override
     public Event interested(Long id, User user) {
         Event event = findById(id).get();
-        event.setInterested(event.getInterested() + 1);
         return eventRepository.save(event);
     }
 
