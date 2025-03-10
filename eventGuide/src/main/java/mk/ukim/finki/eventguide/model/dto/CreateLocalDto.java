@@ -12,6 +12,7 @@ public class CreateLocalDto {
     public List<String> OpeningHours;
     public String MapsLink;
     public String LocalWebsite;
+    public String Image;
 
     @Override
     public boolean equals(Object o) {

@@ -71,7 +71,7 @@ public class PlacesAPIRequest {
         String csvFile = "places.csv";
         try (FileWriter writer = new FileWriter(csvFile)) {
 
-            writer.append("Name;Address;PrimaryType;Types;PhoneNumber;OpeningHours;MapsLink;LocalWebsite\n");
+            writer.append("Name;Address;PrimaryType;Types;PhoneNumber;OpeningHours;MapsLink;LocalWebsite;Image\n");
 
             for (String request : requests) {
                 try {
@@ -127,7 +127,7 @@ public class PlacesAPIRequest {
                         writer.append(name).append("; ").append(address).append("; ").append(primaryType).append("; ")
                                 .append(types.toString()).append("; ").append(phoneNumber).append("; ")
                                 .append(workingHours.toString()).append("; ").append(mapsUri).append("; ")
-                                .append(websiteUri).append("\n");
+                                .append(websiteUri).append("; ").append("N/A").append("\n");
 
                         writer.flush();
                     }

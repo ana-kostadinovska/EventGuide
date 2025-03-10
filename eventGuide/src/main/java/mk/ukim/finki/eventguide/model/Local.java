@@ -3,6 +3,7 @@ package mk.ukim.finki.eventguide.model;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
+
 import java.util.List;
 
 @Data
@@ -24,6 +25,8 @@ public class Local {
 
     private String website;
 
+    private String image;
+
     @Enumerated(EnumType.STRING)
     private LocalType type;
 
@@ -34,12 +37,13 @@ public class Local {
     public Local() {
     }
 
-    public Local(String name, String location, String workingHours, String contact_number, String website, LocalType type, List<Event> events) {
+    public Local(String name, String location, String workingHours, String contact_number, String website, String image, LocalType type, List<Event> events) {
         this.name = name;
         this.location = location;
         this.workingHours = workingHours;
         this.contact_number = contact_number;
         this.website = website;
+        this.image = image;
         this.type = type;
         this.events = events;
     }

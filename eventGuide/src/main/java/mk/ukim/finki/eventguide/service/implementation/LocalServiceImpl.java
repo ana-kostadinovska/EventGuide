@@ -30,18 +30,21 @@ public class LocalServiceImpl implements LocalService {
     }
 
     @Override
-    public Optional<Local> save(String name, String location, String workingHours, String contact_number, String website, LocalType type, List<Event> events) {
-        Local local = new Local(name, location, workingHours, contact_number, website, type, events);
+    public Optional<Local> save(String name, String location, String workingHours, String contact_number, String website, String image, LocalType type, List<Event> events) {
+
+        Local local = new Local(name, location, workingHours, contact_number, website, image, type, events);
         return Optional.of(this.localRepository.save(local));
     }
 
     @Override
-    public Optional<Local> edit(Long id, String name, String location, String workingHours, String contact_number, LocalType type) {
+    public Optional<Local> edit(Long id, String name, String location, String workingHours, String contact_number, String website, String image, LocalType type) {
         Local local = localRepository.findById(id).get();
         local.setName(name);
         local.setLocation(location);
         local.setWorkingHours(workingHours);
         local.setContact_number(contact_number);
+        local.setWebsite(website);
+        local.setImage(image);
         local.setType(type);
         return Optional.of(this.localRepository.save(local));
     }

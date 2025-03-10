@@ -25,7 +25,7 @@
     <!-- Locals Grid -->
     <section class="blog-grid">
         <div class="blog-post" th:each="local : ${locals}">
-            <img src="thumbnail.jpg" alt="img">
+            <img th:src="${local.image}" alt="img">
             <h3 th:text="${local.name}"></h3>
             <span th:text="${local.type}"></span>
             <br/>
