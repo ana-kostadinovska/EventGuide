@@ -34,7 +34,7 @@ public class EventRequest {
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
-    private User createdBy; // ✅ User who submitted the request
+    private User createdBy;
 
     public EventRequest(String name, String artist, String description, LocalDate date, LocalTime time, String referenceUrl, Local local, User createdBy) {
         this.name = name;

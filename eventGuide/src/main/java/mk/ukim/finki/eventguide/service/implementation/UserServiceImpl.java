@@ -104,17 +104,18 @@ public class UserServiceImpl implements UserService {
     public void checkAndAddUser(String sub, String username, String name, String surname, String email) {
         Optional<User> existingUser = userRepository.findBySub(sub);
         if (existingUser.isEmpty()) {
-            Role userRole = roleRepository.findByName("USER")
-                    .orElseGet(() -> roleRepository.save(new Role("ROLE_USER"))); // Ensure ROLE_USER exists
+            Role userRole = roleRepository.findByName("USER").orElse(null);
+            if (userRole == null) {
+                userRole = roleRepository.save(new Role("ROLE_USER"));
+            }
 
-            Set<Role> roles = new HashSet<>();
-            roles.add(userRole);
-
+            Set<Role> roles = Collections.singleton(userRole);
             User newUser = new User(sub, username, name, surname, email);
             newUser.setRoles(roles);
             userRepository.save(newUser);
         }
     }
+
 
     @Override
     public Optional<User> findBySub(String sub) {
