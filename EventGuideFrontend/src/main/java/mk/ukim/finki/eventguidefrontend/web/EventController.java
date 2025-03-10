@@ -62,6 +62,7 @@ public class EventController {
             @RequestParam LocalDate date,
             @RequestParam LocalTime time,
             @RequestParam Long local_id,
+            @RequestParam String referenceUrl,
             Authentication authentication
     ) {
         Map<String, Object> requestBody = Map.of(
@@ -70,7 +71,8 @@ public class EventController {
                 "description", description,
                 "date", date.toString(),
                 "time", time.toString(),
-                "local_id", local_id
+                "local_id", local_id,
+                "referenceUrl", referenceUrl
         );
 
         String response = apiService.postData("/events/add", requestBody, authentication);
@@ -122,6 +124,7 @@ public class EventController {
                             @RequestParam LocalDate date,
                             @RequestParam LocalTime time,
                             @RequestParam Long local_id,
+                            @RequestParam String referenceUrl,
                             Authentication authentication) {
         Map<String, Object> updatedData = Map.of(
                 "name", name,
@@ -129,7 +132,8 @@ public class EventController {
                 "description", description,
                 "date", date.toString(),
                 "time", time.toString(),
-                "local_id", local_id
+                "local_id", local_id,
+                "referenceUrl", referenceUrl
         );
 
         String response = apiService.updateData("/events/edit/" + id, updatedData, authentication);

@@ -27,6 +27,11 @@
             <input type="time" id="time" name="time" th:value="${event.time}" required>
         </div>
 
+        <div class="form-group">
+            <label for="referenceUrl">Reference URL:</label>
+            <input type="url" id="referenceUrl" name="referenceUrl" th:value="${event.referenceUrl}" placeholder="https://example.com">
+        </div>
+
         <input type="hidden" id="local_id" name="local_id" th:value="${event.local.id}">
 
         <button type="submit" class="btn">Save Changes</button>

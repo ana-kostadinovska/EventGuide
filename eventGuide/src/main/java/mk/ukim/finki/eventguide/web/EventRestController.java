@@ -59,9 +59,14 @@ public class EventRestController {
     ) {
         Optional<User> userOptional = userService.getLoggedInUser(authentication);
 
+
+        if(userOptional.isEmpty()) {
+            return ResponseEntity.badRequest().build();
+        }
+
         User user = userOptional.get();
 
-        return this.eventService.save(request.name, request.artist, request.description, request.date, request.time, request.local_id, user)
+        return this.eventService.save(request, user)
                 .map(event -> ResponseEntity.ok().body(event))
                 .orElseGet(() -> ResponseEntity.badRequest().build());
     }

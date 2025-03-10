@@ -3,6 +3,7 @@ package mk.ukim.finki.eventguide.service.implementation;
 import mk.ukim.finki.eventguide.model.Event;
 import mk.ukim.finki.eventguide.model.Local;
 import mk.ukim.finki.eventguide.model.User;
+import mk.ukim.finki.eventguide.model.dto.EventAddRequest;
 import mk.ukim.finki.eventguide.repository.EventRepository;
 import mk.ukim.finki.eventguide.repository.LocalRepository;
 import mk.ukim.finki.eventguide.repository.UserRepository;
@@ -36,9 +37,9 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public Optional<Event> save(String name, String artist, String description, LocalDate date, LocalTime time, Long local_id, User user) {
-        Local local = this.localRepository.findById(local_id).get();
-        Event event = new Event(name, artist, description, date, time, local, user);
+    public Optional<Event> save(EventAddRequest eventAddRequest, User user) {
+        Local local = this.localRepository.findById(eventAddRequest.local_id).get();
+        Event event = new Event(eventAddRequest.name, eventAddRequest.artist, eventAddRequest.description, eventAddRequest.date, eventAddRequest.time, eventAddRequest.referenceUrl, local, user);
         return Optional.of(this.eventRepository.save(event));
     }
 
