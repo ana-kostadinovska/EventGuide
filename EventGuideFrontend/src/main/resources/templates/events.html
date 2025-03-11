@@ -6,6 +6,7 @@
             <li class="event-item">
                 <div class="event-info">
                     <a th:href="@{/events/{id}(id=${event.id})}" th:text="${event.name}" class="event-title"></a>
+                    <span class="event-artist" th:text="'Local: ' + ${event.local.name}"></span>
                     <span class="event-artist" th:text="'Artist: ' + ${event.artist}"></span>
                     <span class="event-date" th:text="'Date: ' + ${event.date}"></span>
                     <span class="event-time" th:text="'Time: ' + ${event.time}"></span>

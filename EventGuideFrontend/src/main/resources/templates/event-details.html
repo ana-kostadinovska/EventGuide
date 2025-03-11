@@ -2,10 +2,11 @@
     <h1 th:text="${event.name}" class="page-title">Event Details</h1>
 
     <div class="event-info">
+        <p><strong>Local:</strong> <span th:text="${event.local.name}"></span></p>
         <p><strong>Artist:</strong> <span th:text="${event.artist}"></span></p>
         <p><strong>Description:</strong> <span th:text="${event.description}"></span></p>
-        <p><strong>Local:</strong> <span th:text="${event.local.name}"></span></p>
         <p><strong>Location:</strong> <span th:text="${event.local.location}"></span></p>
+        <p><strong>Interest for this event:</strong> <span th:text="${event.interested}"></span></p>
     </div>
 
     <a href="/events" class="btn">Back to List</a>
