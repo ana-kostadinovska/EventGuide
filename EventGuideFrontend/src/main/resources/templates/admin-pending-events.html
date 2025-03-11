@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Pending Events</title>
+    <link rel="stylesheet" href="/css/admin-pending-events.css">
+    <script src="/js/admin-actions.js" defer></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+<body>
+
+<div class="container">
+    <h1>Pending Events</h1>
+
+    <table class="events-table">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Artist</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Location</th>
+            <th>User Score</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- Loop through events -->
+        <tr th:each="event : ${events}"
+            th:with="score=${event.user.score}, total=${event.user.totalCreatedEvents}, percentage=${total != 0 ? (score / total) : 0}"
+            th:classappend="${percentage >= 80} ? 'high-score' : (${percentage >= 50} ? 'medium-score' : 'low-score')">
+
+            <td th:text="${event.name}"></td>
+            <td th:text="${event.artist}"></td>
+            <td th:text="${event.date}"></td>
+            <td th:text="${event.time}"></td>
+            <td th:text="${event.local.name}"></td>
+
+            <!-- User Score -->
+            <td>
+                <span th:text="${score} + ' / ' + ${total} + ' (' + ${percentage} + '%)'"></span>
+            </td>
+
+            <td class="action-buttons">
+                <form th:action="@{/admin/approve/{id}(id=${event.id})}" method="post">
+                    <button type="submit" class="approve-btn"><i class="fas fa-check"></i></button>
+                </form>
+                <form th:action="@{/admin/reject/{id}(id=${event.id})}" method="post">
+                    <button type="submit" class="reject-btn"><i class="fas fa-times"></i></button>
+                </form>
+                <form th:action="@{/admin/discard/{id}(id=${event.id})}" method="post">
+                    <button type="submit" class="discard-btn"><i class="fas fa-trash"></i></button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>
