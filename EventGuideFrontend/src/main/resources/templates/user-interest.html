@@ -1,5 +1,5 @@
-<div th:fragment="bodyContent">
-    <h2>Your Interested Events</h2>
+<h2>Your Interested Events</h2>
+<div th:fragment="bodyContent" class="event-details-container">
     <ul>
         <li th:each="event : ${userEvents}" class="events-style">
             <a th:href="@{/events/{id}(id=${event.id})}" th:text="${event.name}" class="event-title"></a>
