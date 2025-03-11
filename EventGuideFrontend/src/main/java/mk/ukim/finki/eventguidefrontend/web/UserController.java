@@ -1,9 +1,11 @@
 package mk.ukim.finki.eventguidefrontend.web;
 
+import mk.ukim.finki.eventguidefrontend.services.ApiService;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -16,37 +18,24 @@ import java.util.Map;
 @RequestMapping("/users")
 public class UserController {
 
-    private final String backendUrl = "http://localhost:9090/api/users";
+    private final String backendUrl = "http://localhost:9090/api/user";
+    private final ApiService apiService;
 
-    @GetMapping
-    public String getUsers(Model model) {
-        RestTemplate restTemplate = new RestTemplate();
-
-        String token="Bearer "+"your-token-here";
-        HttpHeaders headers = new HttpHeaders();
-        headers.set("Authorization", token);
-
-        HttpEntity<String> entity = new HttpEntity<>(headers);
-        ResponseEntity<List> response = restTemplate.exchange(backendUrl, HttpMethod.GET, entity, List.class);
-
-        model.addAttribute("users", response.getBody());
-        return "users";
+    public UserController(ApiService apiService) {
+        this.apiService = apiService;
     }
 
-    @GetMapping("/{id}")
-    public String getUserDetails(@PathVariable Long id, Model model) {
-        RestTemplate restTemplate = new RestTemplate();
+    @GetMapping("/{userId}/events")
+    public String getUserProfile(@PathVariable Long userId, Model model, Authentication authentication) {
 
-        String token="Bearer "+"your-token-here";
-        HttpHeaders headers = new HttpHeaders();
-        headers.set("Authorization", token);
+        String responseUserEvents = apiService.fetchData("/user/" + userId + "/events", authentication);
+        List<Map<String, Object>> userEvents = apiService.parseJsonList(responseUserEvents);
 
-        HttpEntity<String> entity = new HttpEntity<>(headers);
-        ResponseEntity<Map> response = restTemplate.exchange(
-                backendUrl + "/" + id, HttpMethod.GET, entity, Map.class
-        );
+        model.addAttribute("userEvents", userEvents);
+        model.addAttribute("pageTitle", "User Interested Events");
+        model.addAttribute("cssFile", "user-interest.css");
+        model.addAttribute("bodyContent", "user-interest");
 
-        model.addAttribute("user", response.getBody());
-        return "user-details";
+        return "template";
     }
 }

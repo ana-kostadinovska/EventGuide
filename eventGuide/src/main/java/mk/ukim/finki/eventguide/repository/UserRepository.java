@@ -1,6 +1,7 @@
 package mk.ukim.finki.eventguide.repository;
 
 import mk.ukim.finki.eventguide.model.User;
+import mk.ukim.finki.eventguide.model.dto.InterestedEvent;
 import mk.ukim.finki.eventguide.model.dto.UserDTO;
 import mk.ukim.finki.eventguide.model.projections.UserWithRolesProjection;
 import org.springframework.data.jpa.repository.EntityGraph;
@@ -10,6 +11,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 public interface UserRepository extends JpaRepository<User, Long> {
     @EntityGraph(attributePaths = {"roles"})
@@ -29,5 +31,9 @@ public interface UserRepository extends JpaRepository<User, Long> {
         WHERE u.sub = :sub
     """, nativeQuery = true)
     List<UserWithRolesProjection> findBySubWithRolesNative(@Param("sub") String sub);
+
+    @Query("SELECT new mk.ukim.finki.eventguide.model.dto.InterestedEvent(e.id, e.name, e.artist, e.date) " +
+            "FROM User u JOIN u.interest e WHERE u.id = :userId")
+    List<InterestedEvent> findEventDetailsByUserId(@Param("userId") Long userId);
 
 }

@@ -4,6 +4,7 @@ import jakarta.transaction.Transactional;
 import mk.ukim.finki.eventguide.model.Event;
 import mk.ukim.finki.eventguide.model.Role;
 import mk.ukim.finki.eventguide.model.User;
+import mk.ukim.finki.eventguide.model.dto.InterestedEvent;
 import mk.ukim.finki.eventguide.model.dto.UserDTO;
 import mk.ukim.finki.eventguide.model.projections.UserWithRolesProjection;
 import mk.ukim.finki.eventguide.repository.EventRepository;
@@ -175,6 +176,10 @@ public class UserServiceImpl implements UserService {
         } else {
             throw new RuntimeException("User not found");
         }
+    }
+
+    public List<InterestedEvent> getEventDetailsForUser(Long userId) {
+        return userRepository.findEventDetailsByUserId(userId);
     }
 
 }
