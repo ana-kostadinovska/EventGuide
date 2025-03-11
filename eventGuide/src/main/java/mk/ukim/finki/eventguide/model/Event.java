@@ -37,9 +37,12 @@ public class Event {
     private Set<User> interestedUsers = new HashSet<>();
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JsonBackReference
+    @JsonIgnoreProperties({"interest", "events", "roles"})
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
+
+    @Enumerated(EnumType.STRING)
+    private EventRequest.RequestStatus status = EventRequest.RequestStatus.PENDING;
 
     public Event() {
     }

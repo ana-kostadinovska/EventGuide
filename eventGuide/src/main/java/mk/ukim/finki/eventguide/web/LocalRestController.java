@@ -2,16 +2,14 @@ package mk.ukim.finki.eventguide.web;
 
 import mk.ukim.finki.eventguide.model.*;
 import mk.ukim.finki.eventguide.model.dto.LocalUpdateRequest;
+import mk.ukim.finki.eventguide.service.EventService;
 import mk.ukim.finki.eventguide.service.LocalService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
+import java.util.*;
 
 @RestController
 @RequestMapping("/api/locals")
@@ -19,9 +17,11 @@ import java.util.ListIterator;
 public class LocalRestController {
 
     private final LocalService localService;
+    private final EventService eventService;
 
-    public LocalRestController(LocalService localService) {
+    public LocalRestController(LocalService localService, EventService eventService) {
         this.localService = localService;
+        this.eventService = eventService;
     }
 
     @GetMapping
@@ -31,9 +31,15 @@ public class LocalRestController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Local> findById(@PathVariable Long id) {
-        return this.localService.findById(id)
-                .map(local -> ResponseEntity.ok().body(local))
-                .orElseGet(() -> ResponseEntity.notFound().build());
+        var local = this.localService.findById(id);
+        if(local.isPresent()) {
+            var localEvents = local.get().getEvents().stream().filter(event -> event.getStatus() == EventRequest.RequestStatus.APPROVED).toList();
+            local.get().setEvents(localEvents);
+            return ResponseEntity.ok(local.get());
+        }
+        else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @PostMapping("/add")
@@ -72,9 +78,15 @@ public class LocalRestController {
 
     @GetMapping("/{id}/events")
     public ResponseEntity<List<Event>> getEventsByLocalId(@PathVariable Long id) {
-        return this.localService.findById(id)
-                .map(local -> ResponseEntity.ok().body(local.getEvents()))
-                .orElseGet(() -> ResponseEntity.notFound().build());
+        Optional<Local> local = this.localService.findById(id);
+
+        if(local.isPresent()) {
+            List<Event> events = this.eventService.findByStatus(EventRequest.RequestStatus.APPROVED);
+            return ResponseEntity.ok().body(events);
+        }
+        else{
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @GetMapping("/filter")

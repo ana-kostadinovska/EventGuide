@@ -24,6 +24,8 @@ public class User {
     private String name;
     private String surname;
     private String email;
+    private Integer score;
+    private Integer totalCreatedEvents;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
@@ -51,5 +53,7 @@ public class User {
         this.name = name;
         this.surname = surname;
         this.email = email;
+        this.totalCreatedEvents = 0;
+        this.score = 0;
     }
 }

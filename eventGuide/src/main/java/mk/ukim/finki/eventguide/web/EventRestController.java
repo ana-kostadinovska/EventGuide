@@ -1,6 +1,7 @@
 package mk.ukim.finki.eventguide.web;
 
 import mk.ukim.finki.eventguide.model.Event;
+import mk.ukim.finki.eventguide.model.EventRequest;
 import mk.ukim.finki.eventguide.model.User;
 import mk.ukim.finki.eventguide.model.dto.EventAddRequest;
 import mk.ukim.finki.eventguide.service.EventService;
@@ -29,7 +30,7 @@ public class EventRestController {
 
     @GetMapping
     private List<Event> findAll() {
-        return this.eventService.findAll();
+        return this.eventService.findByStatus(EventRequest.RequestStatus.APPROVED);
     }
 
     @GetMapping("/{id}")
