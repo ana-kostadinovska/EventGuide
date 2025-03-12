@@ -4,10 +4,7 @@ import mk.ukim.finki.eventguidefrontend.services.ApiService;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
@@ -93,4 +90,34 @@ public class AdminController {
 
         return "redirect:/admin";
     }
+
+    @PostMapping("/edit/{id}")
+    public String editEvent(@PathVariable Long id,
+                            @RequestParam String name,
+                            @RequestParam String artist,
+                            @RequestParam String description,
+                            @RequestParam String date,
+                            @RequestParam String time,
+                            @RequestParam Long local_id,
+                            @RequestParam String referenceUrl,
+                            Authentication authentication) {
+        Map<String, Object> updatedData = Map.of(
+                "name", name,
+                "artist", artist,
+                "description", description,
+                "date", date,
+                "time", time,
+                "referenceUrl", referenceUrl,
+                "local_id", local_id
+                );
+
+        String response = apiService.updateData("/events/edit/" + id, updatedData, authentication);
+
+        if (response.startsWith("redirect:")) {
+            return response;
+        }
+
+        return "redirect:/admin";
+    }
+
 }

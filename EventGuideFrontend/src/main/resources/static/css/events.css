@@ -6,6 +6,15 @@
     max-width: 750px;
 }
 
+.blog-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    padding: 50px;
+    width: 85%;
+    margin: auto;
+}
+
 /* Event Item */
 .event-item {
     display: flex;
@@ -15,7 +24,7 @@
     margin-bottom: 20px;
     padding: 20px;
     text-align: left;
-    border-radius: 8px;
+    border-radius: 1px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     transition: transform 0.2s ease-in-out, box-shadow 0.3s ease-in-out;
 }
@@ -82,11 +91,29 @@
     background: #dc3545;
     color: white;
     padding: 6px 12px;
-    border-radius: 5px;
+    border-radius: 2px;
     font-size: 14px;
     cursor: pointer;
     transition: background 0.3s ease-in-out;
     border: none;
+}
+
+.section-title{
+    text-align: center;
+    margin-top: 20px;!important;
+}
+
+.details-style {
+    text-decoration: none;
+    color: #fafafa;
+    font-weight: bold;
+    font-size: 14px;
+    background-color: #222;
+    padding: 6px 10px;
+    margin-top: 10px;
+    border-radius: 2px;
+    width: 85px;
+    text-align: center;
 }
 
 .btn-delete:hover {

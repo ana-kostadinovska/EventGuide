@@ -1,40 +1,33 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const modal = document.getElementById("confirmation-modal");
-    const modalText = document.getElementById("modal-text");
-    const confirmBtn = document.getElementById("confirm-btn");
-    const cancelBtn = document.getElementById("cancel-btn");
+    const modal = document.getElementById("event-details-modal");
+    const form = document.getElementById("event-edit-form");
 
-    let currentForm = null;
+    window.openDetailsModal = function (button) {
+        const eventRow = button.closest("tr");
 
-    window.confirmAction = function (action) {
-        let actionText = "";
+        // Set form values
+        document.getElementById("edit-id").value = eventRow.getAttribute("data-id");
+        document.getElementById("edit-local-id").value = eventRow.getAttribute("data-local-id"); // ✅ Local ID added
+        document.getElementById("edit-name").value = eventRow.getAttribute("data-name");
+        document.getElementById("edit-artist").value = eventRow.getAttribute("data-artist");
+        document.getElementById("edit-description").value = eventRow.getAttribute("data-description");
+        document.getElementById("edit-date").value = eventRow.getAttribute("data-date");
+        document.getElementById("edit-time").value = eventRow.getAttribute("data-time");
+        document.getElementById("edit-location").value = eventRow.getAttribute("data-location");
 
-        switch (action) {
-            case "approve":
-                actionText = "Are you sure you want to approve this event?";
-                break;
-            case "reject":
-                actionText = "Are you sure you want to reject this event?";
-                break;
-            case "discard":
-                actionText = "Are you sure you want to discard this event?";
-                break;
-        }
+        // Set reference URL
+        const refUrl = eventRow.getAttribute("data-reference-url");
+        document.getElementById("edit-reference-url").value = refUrl;
+        document.getElementById("edit-reference").href = refUrl;
 
-        modalText.textContent = actionText;
+        // ✅ Set form action dynamically
+        const eventId = eventRow.getAttribute("data-id");
+        form.action = `/admin/edit/${eventId}`;
+
         modal.style.display = "flex";
-
-        return false; // Prevent form submission until confirmed
     };
 
-    confirmBtn.addEventListener("click", function () {
-        if (currentForm) {
-            currentForm.submit();
-        }
+    window.closeDetailsModal = function () {
         modal.style.display = "none";
-    });
-
-    cancelBtn.addEventListener("click", function () {
-        modal.style.display = "none";
-    });
+    };
 });

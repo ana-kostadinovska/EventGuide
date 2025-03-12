@@ -1,9 +1,9 @@
 .event-details-container {
-    max-width: 1200px;
+    max-width: 400px;
     margin: 40px auto;
     background: white;
     padding: 20px;
-    border-radius: 8px;
+    border-radius: 1px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
     text-align: left;
 }
@@ -38,7 +38,7 @@
     font-size: 14px;
     background: #222;
     color: white;
-    border-radius: 5px;
+    border-radius: 1px;
     text-transform: uppercase;
     text-decoration: none;
     text-align: center;
