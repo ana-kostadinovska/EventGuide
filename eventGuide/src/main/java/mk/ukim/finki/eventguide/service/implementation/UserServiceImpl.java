@@ -107,7 +107,7 @@ public class UserServiceImpl implements UserService {
     public void checkAndAddUser(String sub, String username, String name, String surname, String email) {
         Optional<User> existingUser = userRepository.findBySub(sub);
         if (existingUser.isEmpty()) {
-            Role userRole = roleRepository.findByName("USER").orElse(null);
+            Role userRole = roleRepository.findByName("ADMIN").orElse(null);
             if (userRole == null) {
                 userRole = roleRepository.save(new Role("ROLE_USER"));
             }
