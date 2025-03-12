@@ -1,9 +1,10 @@
 package mk.ukim.finki.eventguide.web;
 
 import mk.ukim.finki.eventguide.model.Event;
-import mk.ukim.finki.eventguide.model.EventRequest;
+import mk.ukim.finki.eventguide.model.User;
 import mk.ukim.finki.eventguide.model.dto.InterestedEvent;
-import mk.ukim.finki.eventguide.model.dto.UserDTO;
+import mk.ukim.finki.eventguide.service.EventService;
+import mk.ukim.finki.eventguide.service.UserService;
 import mk.ukim.finki.eventguide.service.implementation.EventServiceImpl;
 import mk.ukim.finki.eventguide.service.implementation.UserServiceImpl;
 import org.springframework.security.core.Authentication;
@@ -11,13 +12,14 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/user")
 public class UserController {
 
-    private final UserServiceImpl userService;
-    private final EventServiceImpl eventService;
+    private final UserService userService;
+    private final EventService eventService;
 
     public UserController(UserServiceImpl userService, EventServiceImpl eventService) {
         this.userService = userService;
@@ -30,8 +32,12 @@ public class UserController {
         return userData;
     }
 
-    @GetMapping("/{userId}/events")
-    public List<InterestedEvent> getUserEvents(@PathVariable Long userId) {
-        return userService.getEventDetailsForUser(userId);
+    @GetMapping("/interested-events")
+    public List<InterestedEvent> getUserInterestedEvents(Authentication authentication) {
+        Optional<User> userOptional = userService.getLoggedInUser(authentication);
+
+        User user = userOptional.get();
+
+        return userService.getEventDetailsForUser(user.getId());
     }
 }

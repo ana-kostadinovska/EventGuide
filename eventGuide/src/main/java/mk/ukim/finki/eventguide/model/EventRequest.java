@@ -26,7 +26,7 @@ public class EventRequest {
     private String referenceUrl;
 
     @Enumerated(EnumType.STRING)
-    private RequestStatus status = RequestStatus.PENDING; // ✅ Pending by default
+    private RequestStatus status = RequestStatus.PENDING;
 
     @ManyToOne
     @JoinColumn(name = "local_id", nullable = false)

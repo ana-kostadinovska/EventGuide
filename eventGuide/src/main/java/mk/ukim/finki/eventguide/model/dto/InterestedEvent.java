@@ -14,6 +14,5 @@ public class InterestedEvent {
     private String name;
     private String artist;
     private LocalDate date;
-
 }
 

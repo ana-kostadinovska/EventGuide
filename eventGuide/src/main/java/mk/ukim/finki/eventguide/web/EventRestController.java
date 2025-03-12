@@ -47,12 +47,11 @@ public class EventRestController {
         User user = userOptional.get();
 
         var updatedUser = userService.addInterest(user.getId(), id);
-        if(updatedUser.isPresent()) {
-            Map<String, Integer> response = Map.of("interestedCount",2);
+        if (updatedUser.isPresent()) {
+            Map<String, Integer> response = Map.of("interestedCount", 2);
 
             return ResponseEntity.ok(response);
-        }
-        else {
+        } else {
             return ResponseEntity.badRequest().build();
         }
     }
@@ -60,13 +59,12 @@ public class EventRestController {
 
     @PostMapping("/add")
     public ResponseEntity<Event> save(
-            @RequestBody EventAddRequest request,
-            Authentication authentication // Add Authentication to get the logged-in user
+            @RequestBody EventAddRequest request, Authentication authentication
     ) {
         Optional<User> userOptional = userService.getLoggedInUser(authentication);
 
 
-        if(userOptional.isEmpty()) {
+        if (userOptional.isEmpty()) {
             return ResponseEntity.badRequest().build();
         }
 

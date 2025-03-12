@@ -128,14 +128,18 @@ public class EventServiceImpl implements EventService {
     @Override
     public Optional<Event> rejectEvent(Long id) {
         var eventOptional = eventRepository.findById(id);
+
         if(eventOptional.isPresent()) {
             var event = eventOptional.get();
+            event.setStatus(EventRequest.RequestStatus.REJECTED);
+            eventRepository.save(event);
+
             var eventCreator = event.getUser();
             var score = eventCreator.getScore();
-            score += 0;
+          
             eventCreator.setScore(score);
+
             userRepository.save(eventCreator);
-            eventRepository.delete(event);
             return Optional.of(event);
         } else {
             return Optional.empty();
@@ -178,5 +182,4 @@ public class EventServiceImpl implements EventService {
             return Optional.empty();
         }
     }
-
 }
