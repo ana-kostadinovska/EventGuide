@@ -28,8 +28,17 @@
         <tbody>
         <!-- Loop through events -->
         <tr th:each="event : ${events}"
-            th:with="score=${event.user.score}, total=${event.user.totalCreatedEvents}, percentage=${total != 0 ? (score * 100 / total) : 0}"
-            th:classappend="${percentage >= 80} ? 'high-score' : (${percentage >= 50} ? 'medium-score' : 'low-score')">
+            th:with="score=${event.user.score}, total=${event.user.totalCreatedEvents}, percentage=${total != 0 ? (score  / total) : 0}"
+            th:classappend="${percentage >= 80} ? 'high-score' : (${percentage >= 50} ? 'medium-score' : 'low-score')"
+            th:attr="data-id=${event.id},
+                     data-name=${event.name},
+                     data-artist=${event.artist},
+                     data-description=${event.description},
+                     data-date=${event.date},
+                     data-time=${event.time},
+                     data-location=${event.local.name},
+                     data-reference-url=${event.referenceUrl},
+                     data-local-id=${event.local.id}"> <!-- ✅ Added Local ID -->
 
             <td th:text="${event.name}"></td>
             <td th:text="${event.artist}"></td>
@@ -44,7 +53,7 @@
 
             <td class="action-buttons">
                 <form>
-                    <button type="button" class="view-btn" th:attr="data-event-id=${event.id}" onclick="openDetailsModal(this)">
+                    <button type="button" class="view-btn" onclick="openDetailsModal(this)">
                         <i class="fas fa-eye"></i>
                     </button>
                 </form>
@@ -67,36 +76,75 @@
 <div id="event-details-modal" class="modal">
     <div class="modal-content">
         <span class="close-modal" onclick="closeDetailsModal()">&times;</span>
-        <h2>Edit Event & Accept</h2>
-        <form id="event-edit-form">
+        <h2>Preview</h2>
+        <form id="event-edit-form" method="post">
+            <input type="hidden" id="edit-id" name="id"> <!-- Hidden input to send event ID -->
+            <input type="hidden" id="edit-local-id" name="local_id"> <!-- ✅ Hidden Local ID -->
+
             <label>Name:</label>
-            <input type="text" id="edit-name" required>
+            <input type="text" id="edit-name" name="name" required>
 
             <label>Artist:</label>
-            <input type="text" id="edit-artist" required>
+            <input type="text" id="edit-artist" name="artist" required>
 
             <label>Description:</label>
-            <textarea id="edit-description" required></textarea>
+            <textarea id="edit-description" name="description" required></textarea>
 
             <label>Date:</label>
-            <input type="date" id="edit-date" required>
+            <input type="date" id="edit-date" name="date" required>
 
             <label>Time:</label>
-            <input type="time" id="edit-time" required>
+            <input type="time" id="edit-time" name="time" required>
 
             <label>Location:</label>
-            <input type="text" id="edit-location" disabled>
+            <input type="text" id="edit-location" name="location" disabled>
 
             <label>Reference URL:</label>
+            <input type="text" id="edit-reference-url" name="referenceUrl" required>
             <a id="edit-reference" href="#" target="_blank">Open Reference</a>
-            <input type="text" id="edit-reference-url" required>
 
             <div class="modal-buttons">
-                <button type="button" id="edit-accept-btn">Edit & Accept</button>
+                <button type="submit">Edit & Accept</button>
             </div>
         </form>
     </div>
 </div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const modal = document.getElementById("event-details-modal");
+        const form = document.getElementById("event-edit-form");
+
+        window.openDetailsModal = function (button) {
+            const eventRow = button.closest("tr");
+
+            // Set form values
+            document.getElementById("edit-id").value = eventRow.getAttribute("data-id");
+            document.getElementById("edit-local-id").value = eventRow.getAttribute("data-local-id"); // ✅ Local ID added
+            document.getElementById("edit-name").value = eventRow.getAttribute("data-name");
+            document.getElementById("edit-artist").value = eventRow.getAttribute("data-artist");
+            document.getElementById("edit-description").value = eventRow.getAttribute("data-description");
+            document.getElementById("edit-date").value = eventRow.getAttribute("data-date");
+            document.getElementById("edit-time").value = eventRow.getAttribute("data-time");
+            document.getElementById("edit-location").value = eventRow.getAttribute("data-location");
+
+            // Set reference URL
+            const refUrl = eventRow.getAttribute("data-reference-url");
+            document.getElementById("edit-reference-url").value = refUrl;
+            document.getElementById("edit-reference").href = refUrl;
+
+            // ✅ Set form action dynamically
+            const eventId = eventRow.getAttribute("data-id");
+            form.action = `/admin/edit/${eventId}`;
+
+            modal.style.display = "flex";
+        };
+
+        window.closeDetailsModal = function () {
+            modal.style.display = "none";
+        };
+    });
+</script>
 
 </body>
 </html>
