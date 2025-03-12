@@ -1,15 +1,16 @@
 <div th:fragment="bodyContent">
-    <h1 class="section-title">List of Events</h1>
+    <h1 class="section-title">Events</h1>
 
-    <ul class="events-list">
-        <th:block th:each="event : ${events}">
-            <li class="event-item">
+    <section class="blog-grid">
+        <div class="blog-post" th:each="event : ${events}">
+            <div class="event-item">
                 <div class="event-info">
-                    <a th:href="@{/events/{id}(id=${event.id})}" th:text="${event.name}" class="event-title"></a>
+                    <span th:text="${event.name}" class="event-title"></span>
                     <span class="event-artist" th:text="'Local: ' + ${event.local.name}"></span>
                     <span class="event-artist" th:text="'Artist: ' + ${event.artist}"></span>
                     <span class="event-date" th:text="'Date: ' + ${event.date}"></span>
                     <span class="event-time" th:text="'Time: ' + ${event.time}"></span>
+                    <a class="details-style" th:href="@{/events/{id}(id=${event.id})}">Details »</a>
                 </div>
                 <div class="event-actions">
                     <form th:action="@{/events/interested/{id}(id=${event.id})}" method="post">
@@ -21,7 +22,7 @@
                         <button type="submit" class="btn-delete">Delete</button>
                     </form>
                 </div>
-            </li>
-        </th:block>
-    </ul>
+            </div>
+        </div>
+    </section>
 </div>
