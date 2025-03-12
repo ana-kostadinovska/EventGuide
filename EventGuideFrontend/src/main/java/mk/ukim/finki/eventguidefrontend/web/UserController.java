@@ -24,10 +24,13 @@ public class UserController {
     public String getUserProfile(Model model, Authentication authentication) {
 
         String responseUserEvents = apiService.fetchData("/user/interested-events", authentication);
-        System.out.println("responseUserEvents = " + responseUserEvents);
         List<Map<String, Object>> userEvents = apiService.parseJsonList(responseUserEvents);
 
+        String responseUserRequestedEvents = apiService.fetchData("/user/requested-events", authentication);
+        List<Map<String, Object>> userRequestedEvents = apiService.parseJsonList(responseUserEvents);
+
         model.addAttribute("userEvents", userEvents);
+        model.addAttribute("userRequestedEvents", userRequestedEvents);
         model.addAttribute("pageTitle", "User Interested Events");
         model.addAttribute("cssFile", "user-interest.css");
         model.addAttribute("bodyContent", "user-interest");

@@ -1,10 +1,22 @@
-<h2>Your Interested Events</h2>
 <div th:fragment="bodyContent" class="event-details-container">
+    <h2>Your Interested Events</h2>
     <ul>
         <li th:each="event : ${userEvents}" class="events-style">
             <a th:href="@{/events/{id}(id=${event.id})}" th:text="${event.name}" class="event-title"></a>
             <span th:text="${event.date}"></span>
             <span th:text="${event.artist}"></span>
+        </li>
+    </ul>
+</div>
+
+<div th:fragment="bodyContent" class="event-details-container">
+    <h2>Your Requested Events</h2>
+    <ul>
+        <li th:each="event : ${userRequestedEvents}" class="events-style">
+            <a th:href="@{/events/{id}(id=${event.id})}" th:text="${event.name}" class="event-title"></a>
+            <span th:text="${event.date}"></span>
+            <span th:text="${event.artist}"></span>
+<!--            <span th:text="${event.status}"></span>-->
         </li>
     </ul>
 </div>

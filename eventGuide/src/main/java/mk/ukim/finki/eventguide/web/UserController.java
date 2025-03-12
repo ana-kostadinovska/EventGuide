@@ -1,7 +1,10 @@
 package mk.ukim.finki.eventguide.web;
 
+import mk.ukim.finki.eventguide.model.Event;
 import mk.ukim.finki.eventguide.model.User;
 import mk.ukim.finki.eventguide.model.dto.InterestedEvent;
+import mk.ukim.finki.eventguide.service.EventService;
+import mk.ukim.finki.eventguide.service.UserService;
 import mk.ukim.finki.eventguide.service.implementation.EventServiceImpl;
 import mk.ukim.finki.eventguide.service.implementation.UserServiceImpl;
 import org.springframework.security.core.Authentication;
@@ -15,8 +18,8 @@ import java.util.Optional;
 @RequestMapping("/api/user")
 public class UserController {
 
-    private final UserServiceImpl userService;
-    private final EventServiceImpl eventService;
+    private final UserService userService;
+    private final EventService eventService;
 
     public UserController(UserServiceImpl userService, EventServiceImpl eventService) {
         this.userService = userService;
@@ -30,7 +33,7 @@ public class UserController {
     }
 
     @GetMapping("/interested-events")
-    public List<InterestedEvent> getUserEvents(Authentication authentication) {
+    public List<InterestedEvent> getUserInterestedEvents(Authentication authentication) {
         Optional<User> userOptional = userService.getLoggedInUser(authentication);
 
         User user = userOptional.get();
