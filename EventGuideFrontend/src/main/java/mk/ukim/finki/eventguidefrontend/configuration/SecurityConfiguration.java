@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.http.*;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.client.*;
@@ -50,9 +51,10 @@ public class SecurityConfiguration {
 
         http.csrf(Customizer.withDefaults())
                 .authorizeHttpRequests(authz -> authz
-                        .requestMatchers("/", "/locals", "/events", "/locals/{id}", "/events/{id}", "/css/**", "/js/**", "/images/**").permitAll()
+                        .requestMatchers("/", "/locals", "/events/**", "/locals/{id}", "/events/{id}", "/css/**", "/js/**", "/images/**").permitAll()
                         .requestMatchers("/admin/**").hasAuthority("ROLE_ADMIN")  // Example role restriction
                         .anyRequest().authenticated())
+                .csrf(AbstractHttpConfigurer::disable)
                 .oauth2Login(oauth2 -> oauth2
                         .successHandler(successHandler)
                         .userInfoEndpoint(userInfo -> userInfo.oidcUserService(this.oidcUserServiceWithRoles()))) // Corrected method

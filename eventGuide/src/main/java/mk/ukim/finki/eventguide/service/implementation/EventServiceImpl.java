@@ -66,6 +66,14 @@ public class EventServiceImpl implements EventService {
         event.setTime(time);
         Local local = this.localRepository.findById(local_id).get();
         event.setLocal(local);
+        if(event.getStatus() != EventRequest.RequestStatus.APPROVED){
+            event.setStatus(EventRequest.RequestStatus.APPROVED);
+            var eventCreator = event.getUser();
+            var score = eventCreator.getScore();
+            score += 100;
+            eventCreator.setScore(score);
+            userRepository.save(eventCreator);
+        }
         return Optional.of(this.eventRepository.save(event));
     }
 
@@ -124,7 +132,7 @@ public class EventServiceImpl implements EventService {
             var event = eventOptional.get();
             var eventCreator = event.getUser();
             var score = eventCreator.getScore();
-            score -= 50;
+            score += 0;
             eventCreator.setScore(score);
             userRepository.save(eventCreator);
             eventRepository.delete(event);
