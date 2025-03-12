@@ -65,7 +65,7 @@
         </p>
 
         <form th:action="@{/events/edit/{id}(id=${event.id})}" method="get">
-            <button type="submit" class="btn">Edit event</button>
+            <button sec:authorize="hasAuthority('ROLE_ADMIN')" type="submit" class="btn">Edit event</button>
         </form>
     </li>
 </ul>

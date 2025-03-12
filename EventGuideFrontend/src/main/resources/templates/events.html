@@ -19,7 +19,7 @@
                         </button>
                     </form>
                     <form th:action="@{/events/delete/{id}(id=${event.id})}" method="post">
-                        <button type="submit" class="btn-delete">Delete</button>
+                        <button sec:authorize="hasAuthority('ROLE_ADMIN')" type="submit" class="btn-delete">Delete</button>
                     </form>
                 </div>
             </div>
