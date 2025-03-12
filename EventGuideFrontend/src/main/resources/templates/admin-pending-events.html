@@ -28,7 +28,7 @@
         <tbody>
         <!-- Loop through events -->
         <tr th:each="event : ${events}"
-            th:with="score=${event.user.score}, total=${event.user.totalCreatedEvents}, percentage=${total != 0 ? (score / total) : 0}"
+            th:with="score=${event.user.score}, total=${event.user.totalCreatedEvents}, percentage=${total != 0 ? (score * 100 / total) : 0}"
             th:classappend="${percentage >= 80} ? 'high-score' : (${percentage >= 50} ? 'medium-score' : 'low-score')">
 
             <td th:text="${event.name}"></td>
@@ -43,6 +43,11 @@
             </td>
 
             <td class="action-buttons">
+                <form>
+                    <button type="button" class="view-btn" th:attr="data-event-id=${event.id}" onclick="openDetailsModal(this)">
+                        <i class="fas fa-eye"></i>
+                    </button>
+                </form>
                 <form th:action="@{/admin/approve/{id}(id=${event.id})}" method="post">
                     <button type="submit" class="approve-btn"><i class="fas fa-check"></i></button>
                 </form>
@@ -56,6 +61,41 @@
         </tr>
         </tbody>
     </table>
+</div>
+
+<!-- Event Details Modal -->
+<div id="event-details-modal" class="modal">
+    <div class="modal-content">
+        <span class="close-modal" onclick="closeDetailsModal()">&times;</span>
+        <h2>Edit Event & Accept</h2>
+        <form id="event-edit-form">
+            <label>Name:</label>
+            <input type="text" id="edit-name" required>
+
+            <label>Artist:</label>
+            <input type="text" id="edit-artist" required>
+
+            <label>Description:</label>
+            <textarea id="edit-description" required></textarea>
+
+            <label>Date:</label>
+            <input type="date" id="edit-date" required>
+
+            <label>Time:</label>
+            <input type="time" id="edit-time" required>
+
+            <label>Location:</label>
+            <input type="text" id="edit-location" disabled>
+
+            <label>Reference URL:</label>
+            <a id="edit-reference" href="#" target="_blank">Open Reference</a>
+            <input type="text" id="edit-reference-url" required>
+
+            <div class="modal-buttons">
+                <button type="button" id="edit-accept-btn">Edit & Accept</button>
+            </div>
+        </form>
+    </div>
 </div>
 
 </body>
